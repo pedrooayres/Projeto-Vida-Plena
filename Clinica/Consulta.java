@@ -6,8 +6,9 @@ public class Consulta {
     private Paciente paciente;
     private Medico medico;
     private Agenda agenda;
+    private double valorConsulta;
 
-    public Consulta(Paciente paciente, Medico medico, Agenda agenda) {
+    public Consulta(Paciente paciente, Medico medico, Agenda agenda,double valorConsulta) {
         this.paciente = paciente;
         this.medico = medico;
         this.agenda = agenda;
