@@ -4,6 +4,7 @@ import Eventos.*;
 import Restaurante.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
@@ -37,50 +38,149 @@ public class Main {
 
     private static void menuClinica(List<Consulta> consultas) {
         System.out.println("\n--- CLÍNICA ---");
-        Medico m = new Medico("João Silva", "111.111.111-11", "9999-1111", "Cardiologia", "CRM-12345");
-        Paciente p = new Paciente("Maria Oliveira", "222.222.222-22", "9999-2222");
-        Local local = new Local("Consultório 1", "Av. Central, 123", 2);
-        Agenda agenda = new Agenda(LocalDateTime.now().plusDays(1), local, "Agendado");
+        System.out.print("Cadastrar (1) Médico ou (2) Paciente? ");
+        int escolha = sc.nextInt();
+        sc.nextLine();
 
-        Consulta c = new Consulta(p, m, agenda, 250.0);
-        consultas.add(c);
+        if (escolha == 1) {
+            System.out.print("Nome: ");
+            String nome = sc.nextLine();
+            System.out.print("CPF: ");
+            String cpf = sc.nextLine();
+            System.out.print("Contato: ");
+            String contato = sc.nextLine();
+            System.out.print("Especialidade: ");
+            String especialidade = sc.nextLine();
+            System.out.print("CRM: ");
+            String crm = sc.nextLine();
 
-        c.exibirDetalhes();
-        System.out.println("Pagamento gerado: " + new Pagamento(250.0, "Cartão", "Pago"));
+            System.out.print("Endereço da clínica: ");
+            String endereco = sc.nextLine();
+            System.out.print("Nome do consultório: ");
+            String consultorioNome = sc.nextLine();
+            Local local = new Local(consultorioNome, endereco, 2);
+
+            Medico medico = new Medico(nome, cpf, contato, especialidade, crm);
+            System.out.println("Médico cadastrado: " + medico);
+
+        } else if (escolha == 2) {
+            System.out.print("Nome: ");
+            String nome = sc.nextLine();
+            System.out.print("CPF: ");
+            String cpf = sc.nextLine();
+            System.out.print("Contato: ");
+            String contato = sc.nextLine();
+
+            Paciente paciente = new Paciente(nome, cpf, contato);
+
+            System.out.print("Nome do médico desejado: ");
+            String nomeMedico = sc.nextLine();
+            System.out.print("Especialidade do médico: ");
+            String espMedico = sc.nextLine();
+            System.out.print("CRM do médico: ");
+            String crmMedico = sc.nextLine();
+            Medico medico = new Medico(nomeMedico, "000.000.000-00", "sem contato", espMedico, crmMedico);
+
+            System.out.print("Local da consulta: ");
+            String localNome = sc.nextLine();
+            Local local = new Local(localNome, "endereço não informado", 1);
+
+            System.out.print("Data e hora (dd/MM/yyyy HH:mm): ");
+            String dataHoraStr = sc.nextLine();
+            LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+
+            Agenda agenda = new Agenda(dataHora, local, "Agendado");
+            Consulta consulta = new Consulta(paciente, medico, agenda, 200.0);
+            consultas.add(consulta);
+
+            consulta.exibirDetalhes();
+        }
     }
 
     private static void menuEventos(List<Evento> eventos) {
         System.out.println("\n--- EVENTOS ---");
-        Local auditorio = new Local("Auditório Vida Plena", "Rua das Flores, 45", 50);
-        Evento e = new Evento("Palestra sobre Saúde", auditorio, 100, "Palestra", LocalDateTime.now().plusDays(7));
-        eventos.add(e);
+        System.out.print("Nome do evento: ");
+        String nomeEvento = sc.nextLine();
+        System.out.print("Tipo do evento (Palestra, Workshop, Show...): ");
+        String tipo = sc.nextLine();
+        System.out.print("Capacidade máxima: ");
+        int capacidade = sc.nextInt();
+        sc.nextLine();
 
-        Participante p1 = new Participante("Carlos", "333.333.333-33", "9999-3333");
-        Participante p2 = new Participante("Fernanda", "444.444.444-44", "9999-4444");
+        System.out.print("Local do evento: ");
+        String nomeLocal = sc.nextLine();
+        System.out.print("Endereço: ");
+        String endereco = sc.nextLine();
+        Local local = new Local(nomeLocal, endereco, capacidade);
 
-        e.inscrever(p1);
-        e.inscrever(p2);
+        System.out.print("Data e hora (dd/MM/yyyy HH:mm): ");
+        String dataHoraStr = sc.nextLine();
+        LocalDateTime dataHora = LocalDateTime.parse(dataHoraStr, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 
-        System.out.println(e);
+        Evento evento = new Evento(nomeEvento, local, capacidade, tipo, dataHora);
+        eventos.add(evento);
+
+        System.out.println("Evento criado: " + evento);
+
+        System.out.print("Quantos participantes deseja inscrever? ");
+        int qtd = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < qtd; i++) {
+            System.out.println("Participante " + (i+1) + ":");
+            System.out.print("Nome: ");
+            String nomeP = sc.nextLine();
+            System.out.print("CPF: ");
+            String cpfP = sc.nextLine();
+            System.out.print("Contato: ");
+            String contatoP = sc.nextLine();
+
+            Participante part = new Participante(nomeP, cpfP, contatoP);
+            if (evento.inscrever(part)) {
+                System.out.println("Inscrição realizada com sucesso!");
+            } else {
+                System.out.println("Evento lotado.");
+            }
+        }
+
+        System.out.println("Resumo final: " + evento);
     }
 
     private static void menuRestaurante(List<Pedido> pedidos) {
         System.out.println("\n--- RESTAURANTE ---");
-        Prato prato1 = new Prato("Salada", 15.0, "Entrada", 120);
-        Prato prato2 = new Prato("Lasanha", 30.0, "Prato Principal", 800);
-        Prato prato3 = new Prato("Sorvete", 12.0, "Sobremesa", 250);
-
         Pedido pedido = new Pedido();
-        pedido.adicionarPrato(prato1);
-        pedido.adicionarPrato(prato2);
-        pedido.adicionarPrato(prato3);
+
+        String continuar;
+        do {
+            System.out.print("Nome do prato: ");
+            String nome = sc.nextLine();
+            System.out.print("Preço: ");
+            double preco = sc.nextDouble();
+            sc.nextLine();
+            System.out.print("Categoria (Entrada, Principal, Sobremesa): ");
+            String categoria = sc.nextLine();
+            System.out.print("Calorias: ");
+            int calorias = sc.nextInt();
+            sc.nextLine();
+
+            Prato prato = new Prato(nome, preco, categoria, calorias);
+            pedido.adicionarPrato(prato);
+
+            System.out.print("Deseja adicionar outro prato? (s/n) ");
+            continuar = sc.nextLine();
+        } while (continuar.equalsIgnoreCase("s"));
 
         pedidos.add(pedido);
+        System.out.println("Pedido realizado: " + pedido);
 
-        System.out.println(pedido);
-
-        Voucher v = new Voucher("DESC10", 0.1);
-        double totalComDesconto = v.aplicar(pedido.calcularTotal());
-        System.out.println("Total com desconto: R$" + totalComDesconto);
+        System.out.print("Deseja aplicar voucher de 10%? (s/n) ");
+        String aplicar = sc.nextLine();
+        if (aplicar.equalsIgnoreCase("s")) {
+            Voucher v = new Voucher("DESC10", 0.1);
+            double totalComDesconto = v.aplicar(pedido.calcularTotal());
+            System.out.println("Total com desconto: R$" + totalComDesconto);
+        } else {
+            System.out.println("Total: R$" + pedido.calcularTotal());
+        }
     }
 }
