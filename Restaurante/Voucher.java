@@ -2,7 +2,7 @@ package Restaurante;
 
 public class Voucher {
     private String codigo;
-    private double desconto; // ex: 0.1 = 10%
+    private double desconto;
     private boolean usado;
 
     public Voucher(String codigo, double desconto) {
@@ -16,7 +16,7 @@ public class Voucher {
             usado = true;
             return valor * (1 - desconto);
         }
-        return valor; // não aplica se já usado
+        return valor; 
     }
 
     public boolean isUsado() { return usado; }

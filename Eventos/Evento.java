@@ -7,18 +7,18 @@ import java.util.List;
 public class Evento {
     private String nome;
     private Local local;
-    private int capacidadeMax;
+    private int capacidadeMaxima;
     private List<Participante> inscritos;
 
-    public Evento(String nome, Local local, int capacidadeMax) {
+    public Evento(String nome, Local local, int capacidadeMaxima) {
         this.nome = nome;
         this.local = local;
-        this.capacidadeMax = capacidadeMax;
+        this.capacidadeMaxima = capacidadeMaxima;
         this.inscritos = new ArrayList<>();
     }
 
     public boolean inscrever(Participante p) {
-        if (inscritos.size() < capacidadeMax) {
+        if (inscritos.size() < capacidadeMaxima) {
             inscritos.add(p);
             return true;
         }
@@ -30,6 +30,6 @@ public class Evento {
 
     @Override
     public String toString() {
-        return "Evento: " + nome + " no " + local.getNome() + " [" + inscritos.size() + "/" + capacidadeMax + "]";
+        return "Evento: " + nome + " no " + local.getNome() + " [" + inscritos.size() + "/" + capacidadeMaxima + "]";
     }
 }
