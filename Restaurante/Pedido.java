@@ -18,6 +18,10 @@ public class Pedido {
         return itens.stream().mapToDouble(Prato::getPreco).sum();
     }
 
+    public List<Prato> getItens() {
+        return itens;
+    }
+    
     @Override
     public String toString() {
         return "Pedido com " + itens.size() + " itens, total: R$" + calcularTotal();

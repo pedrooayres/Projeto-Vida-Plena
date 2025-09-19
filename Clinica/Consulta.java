@@ -13,6 +13,13 @@ public class Consulta {
         this.medico = medico;
         this.agenda = agenda;
     }
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public Agenda getAgenda() {
+        return agenda;
+    }
 
     public void exibirDetalhes() {
         System.out.println("Consulta: " + paciente.getNome() +
