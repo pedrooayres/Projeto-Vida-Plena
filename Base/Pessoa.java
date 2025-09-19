@@ -1,6 +1,6 @@
 package Base;
 
-public class Pessoa {
+public abstract class Pessoa {
     private String nome;
     private String cpf;
     private String contato;
@@ -15,10 +15,8 @@ public class Pessoa {
     public String getCpf() { return cpf; }
     public String getContato() { return contato; }
 
-    public void setContato(String contato) { this.contato = contato; }
-
     @Override
     public String toString() {
-        return nome + " (CPF: " + cpf + ")";
+        return nome + " | CPF: " + cpf + " | Contato: " + contato;
     }
 }

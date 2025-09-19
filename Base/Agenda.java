@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Agenda {
     private LocalDateTime dataHora;
     private Local local;
-    private String status; // agendado, concluído, cancelado
+    private String status;
 
     public Agenda(LocalDateTime dataHora, Local local, String status) {
         this.dataHora = dataHora;
@@ -17,10 +17,8 @@ public class Agenda {
     public Local getLocal() { return local; }
     public String getStatus() { return status; }
 
-    public void setStatus(String status) { this.status = status; }
-
     @Override
     public String toString() {
-        return "Agendado em " + dataHora + " no local " + local.getNome() + " (" + status + ")";
+        return "Data/Hora: " + dataHora + " | Local: " + local.getNome() + " | Status: " + status;
     }
 }

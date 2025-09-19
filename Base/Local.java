@@ -17,6 +17,6 @@ public class Local {
 
     @Override
     public String toString() {
-        return nome + " - " + endereco + " (capacidade: " + capacidade + ")";
+        return nome + " - " + endereco + " (Capacidade: " + capacidade + ")";
     }
 }

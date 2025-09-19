@@ -21,6 +21,7 @@ public class Main {
             System.out.println("1. Clínica");
             System.out.println("2. Eventos");
             System.out.println("3. Restaurante");
+            System.out.println("4. Relatórios");
             System.out.println("0. Sair");
             System.out.print("Escolha: ");
             opcao = sc.nextInt();
@@ -30,18 +31,63 @@ public class Main {
                 case 1 -> menuClinica(consultas);
                 case 2 -> menuEventos(eventos);
                 case 3 -> menuRestaurante(pedidos);
+                case 4 -> menuRelatorios(consultas, eventos, pedidos);
                 case 0 -> System.out.println("Encerrando sistema...");
                 default -> System.out.println("Opção inválida.");
             }
         } while (opcao != 0);
     }
+    private static void menuRelatorios(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
+        System.out.println("\n--- RELATÓRIOS ---");
+        System.out.println("1. Clínica - Médico mais ocupado");
+        System.out.println("2. Clínica - Horário com mais faltas");
+        System.out.println("3. Eventos - Evento com mais inscritos");
+        System.out.println("4. Restaurante - Prato mais vendido (manhã)");
+        System.out.println("0. Voltar");
+        System.out.print("Escolha: ");
 
+        int opcao = sc.nextInt();
+        sc.nextLine();
+
+        switch (opcao) {
+            case 1 -> {
+                Medico m = ClinicaRelatorios.medicoMaisOcupado(consultas);
+                if (m != null) {
+                    System.out.println("Médico mais ocupado: " + m.getNome());
+                } else {
+                    System.out.println("Nenhuma consulta registrada.");
+                }
+            }
+            case 2 -> {
+                String hora = ClinicaRelatorios.horarioComMaisFaltas(consultas);
+                System.out.println("Horário com mais faltas: " + hora);
+            }
+            case 3 -> {
+                Evento e = EventosRelatorios.eventoComMaisInscritos(eventos);
+                if (e != null) {
+                    System.out.println("Evento com mais inscritos: " + e.getNome() + 
+                                       " (" + e.getTotalInscritos() + " inscritos)");
+                } else {
+                    System.out.println("Nenhum evento encontrado.");
+                }
+            }
+            case 4 -> {
+                Prato p = RestauranteRelatorios.pratoMaisVendidoPorPeriodo(pedidos, "manhã");
+                if (p != null) {
+                    System.out.println("Prato mais vendido de manhã: " + p.getNome());
+                } else {
+                    System.out.println("Nenhum pedido registrado.");
+                }
+            }
+            case 0 -> System.out.println("Voltando ao menu principal...");
+            default -> System.out.println("Opção inválida.");
+        }
+    }
     private static void menuClinica(List<Consulta> consultas) {
         System.out.println("\n--- CLÍNICA ---");
         System.out.print("Cadastrar (1) Médico ou (2) Paciente? ");
         int escolha = sc.nextInt();
         sc.nextLine();
-
         if (escolha == 1) {
             System.out.print("Nome: ");
             String nome = sc.nextLine();
@@ -72,7 +118,6 @@ public class Main {
             String contato = sc.nextLine();
 
             Paciente paciente = new Paciente(nome, cpf, contato);
-
             System.out.print("Nome do médico desejado: ");
             String nomeMedico = sc.nextLine();
             System.out.print("Especialidade do médico: ");
@@ -96,7 +141,6 @@ public class Main {
             consulta.exibirDetalhes();
         }
     }
-
     private static void menuEventos(List<Evento> eventos) {
         System.out.println("\n--- EVENTOS ---");
         System.out.print("Nome do evento: ");
@@ -145,7 +189,6 @@ public class Main {
 
         System.out.println("Resumo final: " + evento);
     }
-
     private static void menuRestaurante(List<Pedido> pedidos) {
         System.out.println("\n--- RESTAURANTE ---");
         Pedido pedido = new Pedido();
