@@ -150,4 +150,27 @@ public class Main {
             }
         }
     }
+    private static void gerarRelatoriosFinais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
+    System.out.println("\n=== RELATÓRIOS FINAIS ===");
+
+    System.out.println("\n--- Clínica ---");
+    Medico medicoOcupado = ClinicaRelatorios.medicoMaisOcupado(consultas);
+    System.out.println(medicoOcupado != null ? "Médico mais ocupado: " + medicoOcupado.getNome(): "Nenhum médico cadastrado");
+    String horaFaltas = ClinicaRelatorios.horarioComMaisFaltas(consultas);
+    System.out.println("Horário com mais faltas: " + horaFaltas);
+
+    System.out.println("\n--- Eventos ---");
+    Evento eventoInscritos = EventosRelatorios.eventoComMaisInscritos(eventos);
+    System.out.println(eventoInscritos != null ? "Evento com mais inscritos: " + eventoInscritos.getNome()
+                                               : "Nenhum evento registrado");
+
+    Evento eventoLotado = EventosRelatorios.eventoLotacaoMaisRapida(eventos);
+    System.out.println(eventoLotado != null ? "Evento que lotou mais rápido: " + eventoLotado.getNome(): "Nenhum evento lotado");
+
+    System.out.println("\n--- Restaurante ---");
+    Prato pratoPopular = RestauranteRelatorios.pratoMaisVendidoPorPeriodo(pedidos, "geral");
+    System.out.println(pratoPopular != null ? "Prato mais vendido: " + pratoPopular.getNome()
+                                            : "Nenhum prato registrado");
+}
+
 }
