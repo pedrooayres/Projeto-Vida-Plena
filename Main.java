@@ -64,15 +64,90 @@ public class Main {
         }
     }
 
-    private static void menuClinica(List<Consulta> consultas) {
-        System.out.println("\n[CLÍNICA] Cadastro/Agendamento aqui...");
-    }
+   private static void menuClinica(List<Consulta> consultas) {
+    System.out.println("\n--- CLÍNICA ---");
+    System.out.println("1. Cadastrar Médico");
+    System.out.println("2. Cadastrar Paciente");
+    System.out.println("3. Agendar Consulta");
+    System.out.println("0. Voltar");
+    int opcao = sc.nextInt(); sc.nextLine();
 
-    private static void menuEventos(List<Evento> eventos) {
-        System.out.println("\n[EVENTOS] Cadastro de eventos/inscrições aqui...");
+    switch (opcao) {
+        case 1 -> {
+            System.out.print("Nome: "); String nome = sc.nextLine();
+            System.out.print("CPF: "); String cpf = sc.nextLine();
+            System.out.print("Contato: "); String contato = sc.nextLine();
+            System.out.print("Especialidade: "); String esp = sc.nextLine();
+            System.out.print("CRM: "); String crm = sc.nextLine();
+            Medico m = new Medico(nome, cpf, contato, esp, crm);
+            System.out.println("Médico cadastrado: " + m);
+        }
+        case 2 -> {
+            System.out.print("Nome: "); String nome = sc.nextLine();
+            System.out.print("CPF: "); String cpf = sc.nextLine();
+            System.out.print("Contato: "); String contato = sc.nextLine();
+            Paciente p = new Paciente(nome, cpf, contato);
+            System.out.println("Paciente cadastrado: " + p);
+        }
+        case 3 -> {
+            System.out.println("Agendamento de consulta ainda em construção...");
+        }
     }
+}
+   private static void menuEventos(List<Evento> eventos) {
+    System.out.println("\n--- EVENTOS ---");
+    System.out.println("1. Criar Evento");
+    System.out.println("2. Inscrever Participante");
+    System.out.println("0. Voltar");
+    int opcao = sc.nextInt(); sc.nextLine();
 
-    private static void menuRestaurante(List<Pedido> pedidos) {
-        System.out.println("\n[RESTAURANTE] Criação de pedidos aqui...");
+    switch (opcao) {
+        case 1 -> {
+            System.out.print("Nome do evento: "); String nome = sc.nextLine();
+            System.out.print("Capacidade máxima: "); int cap = sc.nextInt(); sc.nextLine();
+            System.out.print("Tipo: "); String tipo = sc.nextLine();
+            Local local = new Local("Auditório", "Rua X", cap); 
+            Evento ev = new Evento(nome, local, cap, tipo, LocalDateTime.now().plusDays(10));
+            eventos.add(ev);
+            System.out.println("Evento criado: " + ev.getNome());
+        }
+        case 2 -> {
+            System.out.print("Nome do participante: "); String nome = sc.nextLine();
+            System.out.print("CPF: "); String cpf = sc.nextLine();
+            System.out.print("Contato: "); String contato = sc.nextLine();
+            Participante part = new Participante(nome, cpf, contato);
+            if (!eventos.isEmpty()) {
+                eventos.get(0).inscrever(part); 
+                System.out.println("Inscrito no evento " + eventos.get(0).getNome());
+            }
+        }
+    }
+}private static void menuRestaurante(List<Pedido> pedidos) {
+    System.out.println("\n--- RESTAURANTE ---");
+    System.out.println("1. Cadastrar Pedido");
+    System.out.println("2. Adicionar Prato");
+    System.out.println("0. Voltar");
+    int opcao = sc.nextInt(); sc.nextLine();
+
+    switch (opcao) {
+        case 1 -> {
+            Pedido pedido = new Pedido();
+            pedidos.add(pedido);
+            System.out.println("Novo pedido criado.");
+        }
+        case 2 -> {
+            if (pedidos.isEmpty()) {
+                System.out.println("Crie um pedido primeiro.");
+                return;
+            }
+            System.out.print("Nome do prato: "); String nome = sc.nextLine();
+            System.out.print("Preço: "); double preco = sc.nextDouble(); sc.nextLine();
+            System.out.print("Categoria: "); String categoria = sc.nextLine();
+            System.out.print("Calorias: "); int calorias = sc.nextInt(); sc.nextLine();
+            Prato prato = new Prato(nome, preco, categoria, calorias);
+            pedidos.get(0).adicionarPrato(prato);
+            System.out.println("Prato adicionado ao pedido.");
+            }
+        }
     }
 }
