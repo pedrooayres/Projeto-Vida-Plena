@@ -17,9 +17,4 @@ public class Prato {
     public double getPreco() { return preco; }
     public String getCategoria() { return categoria; }
     public int getCalorias() { return calorias; }
-
-    @Override
-    public String toString() {
-        return nome + " (" + categoria + ") - R$" + preco + " - " + calorias + " kcal";
-    }
 }
