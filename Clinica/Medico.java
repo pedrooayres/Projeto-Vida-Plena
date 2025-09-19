@@ -17,6 +17,6 @@ public class Medico extends Pessoa {
 
     @Override
     public String toString() {
-        return "Dr(a). " + getNome() + " - " + especialidade + " (CRM: " + crm + ")";
+        return super.toString() + " | Especialidade: " + especialidade + " | CRM: " + crm;
     }
 }

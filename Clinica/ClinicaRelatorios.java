@@ -3,6 +3,7 @@ package Clinica;
 import java.util.*;
 
 public class ClinicaRelatorios {
+
     public static Medico medicoMaisOcupado(List<Consulta> consultas) {
         Map<Medico, Integer> contador = new HashMap<>();
         for (Consulta c : consultas) {

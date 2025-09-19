@@ -6,25 +6,17 @@ public class Consulta {
     private Paciente paciente;
     private Medico medico;
     private Agenda agenda;
-    private double valorConsulta;
+    private double valor;
 
-    public Consulta(Paciente paciente, Medico medico, Agenda agenda,double valorConsulta) {
+    public Consulta(Paciente paciente, Medico medico, Agenda agenda, double valor) {
         this.paciente = paciente;
         this.medico = medico;
         this.agenda = agenda;
-    }
-    public Medico getMedico() {
-        return medico;
+        this.valor = valor;
     }
 
-    public Agenda getAgenda() {
-        return agenda;
-    }
-
-    public void exibirDetalhes() {
-        System.out.println("Consulta: " + paciente.getNome() +
-                " com " + medico.toString() +
-                " em " + agenda.getDataHora() +
-                " no local " + agenda.getLocal().getNome());
-    }
+    public Medico getMedico() { return medico; }
+    public Paciente getPaciente() { return paciente; }
+    public Agenda getAgenda() { return agenda; }
+    public double getValor() { return valor; }
 }
