@@ -2,6 +2,7 @@
 
 ## 👥 Integrantes  
 Pedro Henrique Mendonça Ayres
+João 
 ## 📌 Descrição  
 O **Sistema Vida Plena** é um projeto em Java que integra três áreas principais:  
 

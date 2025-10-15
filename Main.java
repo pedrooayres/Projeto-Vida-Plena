@@ -106,6 +106,7 @@ public class Main {
             System.out.print("Nome do evento: "); String nome = sc.nextLine();
             System.out.print("Capacidade máxima: "); int cap = sc.nextInt(); sc.nextLine();
             System.out.print("Tipo: "); String tipo = sc.nextLine();
+            System.out.println("Data : (DD/MM/AAAA)"); String data = sc.nextLine();
             Local local = new Local("Auditório", "Rua X", cap); 
             Evento ev = new Evento(nome, local, cap, tipo, LocalDateTime.now().plusDays(10));
             eventos.add(ev);
