@@ -25,4 +25,7 @@ public class RestauranteRelatorios {
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
+    public static void faixaComMaisClientes(List <Pedido> pedidos ){
+        System.out.println("Faixa de hora com mais clientes");
+    }
 }

@@ -52,6 +52,17 @@ vidaplena/
 ---
 
 ## 🧠 Perguntas Estratégicas Respondidas por Métodos
+1- Quais médicos e eventos têm maior ocupação nos mesmos horários?
+2 - Qual o dia com mais faltas na clinica e nos eventos
+3- medicos/ evento mais requisitados
+4 - Quais dias da semana têm maior concentração de atividades em todas as áreas?
+----- Sugestões ---
+5- Qual tipo de serviço (clínico, evento ou restaurante) gera mais receita mensal?
+6- Qual faixa de horário é mais movimentada em todos os setores?
+7-Quais clientes possuem maior gasto total somando consultas, eventos e pedidos no restaurante?
+8-Quais datas apresentam maior volume de atividades simultâneas entre áreas diferentes?
+9-Qual é o percentual de comparecimento em relação às agendas criadas (consultas realizadas, eventos e reservas confirmadas)?
+
 
 ---
 
