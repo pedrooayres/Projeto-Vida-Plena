@@ -43,6 +43,11 @@ public class Main {
         System.out.println("2. Horário com mais faltas");
         System.out.println("3. Evento com mais inscritos");
         System.out.println("4. Prato mais vendido (manhã)");
+        System.out.println("5. Que tipo de serviço gera maior renda mensal");
+        System.out.println("6. Qual faixa de horario mais frenquentada em cada setor");
+        System.out.println("7. Quias clientes possuem mais gastos total (clinica + eventos + restuarente)");
+        System.out.println("8. Quais datas apresentam maior volume de atividades simultâneas entre áreas diferentes");
+        System.out.println("9. Qual é o percentual de comparecimento em relação às agendas criadas");
         System.out.println("0. Voltar");
         int opcao = sc.nextInt();
         sc.nextLine();
