@@ -16,8 +16,9 @@ public class EventosRelatorios {
     }
      
     /* metodos respostas - eventos
-     * perguntas 
-     * 1, 2, 3,4,5,6,7,8,9
+    1- horarios de ocupação para cada evento, 2 - dia com mais falta, 3- evento com mais participantes
+    4- dia da com maior concentração de eventos, 5- renda mensal, 6- qual faixa de horario mais movimentada
+    7- gasto de cada pessoa, 8-qual data com maior numero de atividade, 9- percentual de presença
     */
     public static void eventoComMaisFaltas(List <Evento> eventos){
         System.out.println("Dias com maior taxa de falta no eventos :");

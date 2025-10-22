@@ -58,7 +58,7 @@ vidaplena/
 4 - Quais dias da semana têm maior concentração de atividades em todas as áreas? (clinica + evento + restuarente)
 5- Qual tipo de serviço (clínico, evento ou restaurante) gera mais receita mensal? (clinica + evento + restuarante)
 6- Qual faixa de horário é mais movimentada em todos os setores? (clinica + evento + restuarante)
-7-Quais clientes possuem maior gasto total somando consultas, eventos e pedidos no restaurante? (evento + restuarante)
+7-Quais clientes possuem maior gasto total somando consultas, eventos e pedidos no restaurante? (clinica +evento + restuarante)
 8-Quais datas apresentam maior volume de atividades simultâneas entre áreas diferentes?(clinica + evento +restuarante)
 9-Qual é o percentual de comparecimento em relação às agendas criadas (consultas realizadas, eventos e reservas confirmadas)? (clinica + evento + restuarante)
 

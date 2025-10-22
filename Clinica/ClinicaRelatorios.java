@@ -33,21 +33,8 @@ public class ClinicaRelatorios {
     } 
     /* metodos respostas - clinica
      * perguntas 
-     * 1, 2, 3,4,5,6,8,9
+     * 1 - horarios de ocupação para cada medico, 2- dia com mais falta, 3- medico mais requisito
+     * 4 - qual  dia do semana tem mais atividade, 5 - renda mensal ,6 - faixa de horario mais movimentada
+     *7- gasto de cada pessoa, 8 - qual data com maior numero de atividade, 9 - percentual de presença
     */
-   public static void medicosMaisOcupados(List<Consulta> consultas) {
-        System.out.println("Médicos  com maior ocupação no horario :");
-    }
-         public static void diaComMaisFaltas(List<Consulta> consultas) {
-        System.out.println("Dia com mais faltas na clínica :");
-    }
-        public static void medicoMaisRequisitados(List<Consulta> consultas) {
-        System.out.println("Médicos mais requisitados:");
-    } 
-         public static void diasMaisMovimentados(List<Consulta> consultas) {
-        System.out.println("Dias da semana com mais consultas:");
-    }
-    public static void percentalDeComparecimento(List <Consulta> consultas){
-        System.out.println("Percentual de Presença : ");
-    }
 }

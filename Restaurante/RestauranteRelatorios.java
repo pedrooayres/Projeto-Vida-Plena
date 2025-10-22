@@ -19,7 +19,8 @@ public class RestauranteRelatorios {
     }
      
     /* metodos respostas - restuarante
-     * perguntas 4,5,6,8,9
+    4- dia da com maior concentração de eventos, 5-  renda mensal, 6- qual faixa de horario mais movimentada
+    7- gasto de cada pessoa,  8-qual data com maior numero de atividade, 9- percentual de presença
     */
     public static Pessoa clienteMaisConsumiu(Map<Pessoa, List<Pedido>> pedidosPorCliente) {
         return pedidosPorCliente.entrySet().stream()
