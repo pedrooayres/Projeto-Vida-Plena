@@ -55,7 +55,7 @@ public class Main {
         switch (opcao) {
             case 1 -> {
                 Medico m = ClinicaRelatorios.medicoMaisOcupado(consultas);
-                System.out.println(m != null ? "Médico mais ocupado: " + m.getNome() : "Nenhum médico encontrado");
+                System.out.println(" Medico :");
             }
             case 2 -> System.out.println("Horário com mais faltas: " + ClinicaRelatorios.horarioComMaisFaltas(consultas));
             case 3 -> {
@@ -95,10 +95,15 @@ public class Main {
             System.out.println("Paciente cadastrado: " + p);
         }
         case 3 -> {
-            System.out.println("Agendamento de consulta ainda em construção...");
+            System.out.println("Qual seu nome :"); String nome = sc.nextLine();
+            System.out.println("Qual dia deseja marcar a consulta (DD/MM/AAAA)"); String data = sc.nextLine(); 
+            System.out.println("Que horas deseja marcar a consulta (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Que medico deseja se consultar "); String nomemed = sc.nextLine();
+            Consulta c = new Consulta(null, null, null, opcao);
+            System.out.println("Consulta marcada com sucesso");
+         }
         }
     }
-}
    private static void menuEventos(List<Evento> eventos) {
     System.out.println("\n--- EVENTOS ---");
     System.out.println("1. Criar Evento");
@@ -156,27 +161,4 @@ public class Main {
             }
         }
     }
-    private static void gerarRelatoriosFinais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
-    System.out.println("\n=== RELATÓRIOS FINAIS ===");
-
-    System.out.println("\n--- Clínica ---");
-    Medico medicoOcupado = ClinicaRelatorios.medicoMaisOcupado(consultas);
-    System.out.println(medicoOcupado != null ? "Médico mais ocupado: " + medicoOcupado.getNome(): "Nenhum médico cadastrado");
-    String horaFaltas = ClinicaRelatorios.horarioComMaisFaltas(consultas);
-    System.out.println("Horário com mais faltas: " + horaFaltas);
-
-    System.out.println("\n--- Eventos ---");
-    Evento eventoInscritos = EventosRelatorios.eventoComMaisInscritos(eventos);
-    System.out.println(eventoInscritos != null ? "Evento com mais inscritos: " + eventoInscritos.getNome()
-                                               : "Nenhum evento registrado");
-
-    Evento eventoLotado = EventosRelatorios.eventoLotacaoMaisRapida(eventos);
-    System.out.println(eventoLotado != null ? "Evento que lotou mais rápido: " + eventoLotado.getNome(): "Nenhum evento lotado");
-
-    System.out.println("\n--- Restaurante ---");
-    Prato pratoPopular = RestauranteRelatorios.pratoMaisVendidoPorPeriodo(pedidos, "geral");
-    System.out.println(pratoPopular != null ? "Prato mais vendido: " + pratoPopular.getNome()
-                                            : "Nenhum prato registrado");
-}
-
 }

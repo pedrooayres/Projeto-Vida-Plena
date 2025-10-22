@@ -14,6 +14,11 @@ public class EventosRelatorios {
                 .max(Comparator.comparingInt(Evento::getTotalInscritos))
                 .orElse(null);
     }
+     
+    /* metodos respostas - eventos
+     * perguntas 
+     * 1, 2, 3,4,5,6,7,8,9
+    */
     public static void eventoComMaisFaltas(List <Evento> eventos){
         System.out.println("Dias com maior taxa de falta no eventos :");
     }

@@ -17,7 +17,10 @@ public class RestauranteRelatorios {
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
-
+     
+    /* metodos respostas - restuarante
+     * perguntas 4,5,6,8,9
+    */
     public static Pessoa clienteMaisConsumiu(Map<Pessoa, List<Pedido>> pedidosPorCliente) {
         return pedidosPorCliente.entrySet().stream()
                 .max(Comparator.comparingDouble(e -> e.getValue().stream()
