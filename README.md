@@ -1,88 +1,135 @@
-# 🌿 Projeto Vida Plena – Sistema Integrado
+# 🎃 Projeto Vida Plena — Edição Especial de Halloween 👻
 
-Um sistema unificado que conecta **Clínica**, **Eventos** e **Restaurante**, permitindo o gerenciamento inteligente de **pessoas, locais, agendas e pagamentos** em um só ambiente.
+Bem-vindo ao sistema **Vida Plena**, desenvolvido para integrar **Clínica**, **Eventos** e **Restaurante** durante a *Semana Vida Plena* em Recife — um evento dedicado à **saúde, cultura e bem-estar**.  
 
-Desenvolvido como parte da disciplina de **Programação Orientada a Objetos (POO)**, o projeto aplica os princípios de **encapsulamento, herança, polimorfismo e modularização**, com código organizado em **pacotes Java**.
-
----
-
-## 🚀 Funcionalidades Principais
-
-✅ Cadastro e gerenciamento de **consultas médicas**, **eventos sociais** e **pedidos de restaurante**  
-✅ Compartilhamento de dados entre módulos (pessoas, locais, agenda e pagamentos)  
-✅ Sistema de **menu interativo** via console  
-✅ Relatórios estratégicos automáticos gerados ao encerrar o sistema  
-✅ Encapsulamento completo (`private`, `getters`, `setters`)  
-✅ Estrutura de pacotes bem definida  
-✅ Suporte a expansão modular (novos serviços podem ser adicionados facilmente)
+🕸️ Nesta edição especial de **31 de outubro**, o projeto ganhou um toque misterioso…  
+Entre consultas, oficinas e refeições, algo *assustadoramente funcional* está prestes a acontecer! 💀
 
 ---
 
-## 🧩 Estrutura do Projeto
+## 🩺 Sobre o Projeto
 
-vidaplena/
+O **Vida Plena** é composto por **três sistemas integrados**:
+
+- 💉 **Clínica** – realiza consultas e check-ups rápidos.  
+- 🎭 **Eventos** – organiza palestras, oficinas e shows de saúde e bem-estar.  
+- 🍲 **Restaurante Parceiro** – oferece cardápios funcionais e combos especiais.
+
+Os três sistemas **compartilham informações** sobre:
+- 👥 Pessoas  
+- 📍 Locais  
+- 🗓️ Agendas  
+- 💰 Pagamentos  
+
+Tudo foi desenvolvido aplicando os princípios de **Programação Orientada a Objetos (POO)** em **Java**, com foco em **modularização, encapsulamento e integração entre módulos**.
+
+---
+
+## ⚙️ Estrutura do Projeto
+
+```
+src/
 ├── clinica/
-│ ├── Medico.java
-│ ├── Paciente.java
-│ ├── Consulta.java
-│ └── ClinicaRelatorios.java
+│   ├── Clinica.java
+│   ├── Consulta.java
+│   ├── ClinicaRelatorios.java
 │
 ├── eventos/
-│ ├── Evento.java
-│ ├── Participante.java
-│ └── EventoRelatorios.java
+│   ├── Evento.java
+│   ├── Participante.java
+│   ├── EventosRelatorios.java
 │
 ├── restaurante/
-│ ├── Pedido.java
-│ ├── Item.java
-│ └── RestauranteRelatorios.java
+│   ├── Pedido.java
+│   ├── RestauranteRelatorios.java
 │
 ├── compartilhado/
-│ ├── Pessoa.java
-│ ├── Local.java
-│ ├── Pagamento.java
-│ └── Agenda.java
-│
-├── relatorios/
-│ └── RelatoriosGerais.java
+│   ├── Pessoa.java
+│   ├── Local.java
+│   ├── Pagamento.java
 │
 └── Main.java
-
-
----
-
-## 🧠 Perguntas Estratégicas Respondidas por Métodos
-1- Quais médicos e eventos têm maior ocupação nos mesmos horários? (clinica + evento)
-2 - Qual o dia com mais faltas na clinica e nos eventos (clinica + evento)
-3- medicos/ evento mais requisitados (clinica + evento)
-4 - Quais dias da semana têm maior concentração de atividades em todas as áreas? (clinica + evento + restuarente)
-5- Qual tipo de serviço (clínico, evento ou restaurante) gera mais receita mensal? (clinica + evento + restuarante)
-6- Qual faixa de horário é mais movimentada em todos os setores? (clinica + evento + restuarante)
-7-Quais clientes possuem maior gasto total somando consultas, eventos e pedidos no restaurante? (clinica +evento + restuarante)
-8-Quais datas apresentam maior volume de atividades simultâneas entre áreas diferentes?(clinica + evento +restuarante)
-9-Qual é o percentual de comparecimento em relação às agendas criadas (consultas realizadas, eventos e reservas confirmadas)? (clinica + evento + restuarante)
-
+```
 
 ---
 
-## 🧱 Conceitos Aplicados
+## 🔍 Perguntas de Tomada de Decisão
 
-- **Encapsulamento:** todos os atributos são `private`, com acesso via getters e setters.  
-- **Herança:** `Pessoa` é classe base para `Medico`, `Paciente` e `Participante`.  
-- **Composição:** `Consulta`, `Evento` e `Pedido` utilizam `Local`, `Agenda` e `Pagamento`.  
-- **Polimorfismo:** métodos de relatório que processam diferentes tipos de objetos.  
-- **Modularização:** uso de pacotes Java para separar responsabilidades.  
+Durante o desenvolvimento, o grupo criou **9 perguntas estratégicas** que cruzam dados entre os três sistemas, permitindo gerar *relatórios inteligentes* e auxiliar na tomada de decisões:
 
----
-
-## ⚙️ Como Executar
-
-1. Abra o projeto em uma IDE Java (Eclipse, IntelliJ ou VSCode).  
-2. Certifique-se de que o **JDK 17** (ou superior) está configurado.  
-3. Compile e execute o arquivo `Main.java`.  
-4. Use o menu interativo para cadastrar dados e gerar relatórios.  
-5. Ao escolher **0 – Encerrar**, os relatórios finais são gerados automaticamente.
+| # | Pergunta | Sistemas Envolvidos |
+|:-:|-----------|---------------------|
+| 1 | Quais médicos e eventos têm maior ocupação nos mesmos horários? | Clínica + Eventos |
+| 2 | Qual o dia com mais faltas na clínica e nos eventos? | Clínica + Eventos |
+| 3 | Médicos/eventos mais requisitados. | Clínica + Eventos |
+| 4 | Quais dias da semana têm maior concentração de atividades em todas as áreas? | Clínica + Eventos + Restaurante |
+| 5 | Qual tipo de serviço gera mais receita mensal? | Clínica + Eventos + Restaurante |
+| 6 | Qual faixa de horário é mais movimentada em todos os setores? | Clínica + Eventos + Restaurante |
+| 7 | Quais clientes possuem maior gasto total somando consultas, eventos e pedidos? | Clínica + Eventos + Restaurante |
+| 8 | Quais datas apresentam maior volume de atividades simultâneas? | Clínica + Eventos + Restaurante |
+| 9 | Qual o percentual de comparecimento em relação às agendas criadas? | Clínica + Eventos + Restaurante |
 
 ---
 
-## 📊 Exemplo de Execução (Console)
+## 💻 Como Executar o Projeto
+
+### 🔧 Requisitos
+- **Java 17+**
+- IDE (IntelliJ, VS Code, Eclipse) ou terminal com `javac` configurado.
+
+### ▶️ Execução via terminal
+1. Acesse o diretório raiz do projeto:
+   ```bash
+   cd Projeto-Vida-Plena/src
+   ```
+2. Compile os arquivos:
+   ```bash
+   javac main/Main.java
+   ```
+3. Execute o programa:
+   ```bash
+   java main.Main
+   ```
+
+---
+
+## 📊 Diagrama de Classes (Resumo UML)
+
+*(Adicione aqui uma imagem exportada do Lucidchart / draw.io / PlantUML)*  
+Exemplo:
+```
+Pessoa <|-- Paciente
+Pessoa <|-- Participante
+Pessoa <|-- Cliente
+Clinica --> Consulta
+Eventos --> Evento
+Restaurante --> Pedido
+```
+
+---
+
+## 🎭 Equipe Vida Plena — Halloween Edition
+
+| Integrante | Módulo | Função |
+|-------------|--------|--------|
+| 🧠 **Pedro Henrique Mendonça Ayres** | Eventos | Relatórios e integração com clínica/restaurante |
+| 💉 **[Nome do colega 1]** | Clínica | Consultas, pacientes e relatórios |
+| 🍽️ **[Nome do colega 2]** | Restaurante | Pedidos, faturamento e relatórios |
+
+📅 **Apresentação:** *31 de outubro de 2025 — Halloween*  
+💬 *Que os bugs não te assustem e os testes rodem à meia-noite!* 🦇  
+
+---
+
+## 🕯️ Créditos Especiais
+
+Projeto desenvolvido para a disciplina **Programação Orientada a Objetos (POO)** —  
+**Curso de Ciência da Computação - UNICAP**  
+Professor: *[Nome do professor]*
+
+---
+
+## 👻 Mensagem Final
+
+> “Entre consultas e feitiços, relatórios e poções,  
+> o sistema Vida Plena está vivo... e rodando!” ⚰️
