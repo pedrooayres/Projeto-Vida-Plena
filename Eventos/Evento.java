@@ -13,8 +13,9 @@ public class Evento {
     private LocalDateTime data;
     private LocalDateTime dataCriacao;
     private List<Participante> participantes;
+    private int comparecimento_evento;
 
-    public Evento(String nome, Local local, int capacidadeMax, String tipo, LocalDateTime data) {
+    public Evento(String nome, Local local, int capacidadeMax, String tipo, LocalDateTime data, int comparecimento_evento) {
         this.nome = nome;
         this.local = local;
         this.capacidadeMax = capacidadeMax;
@@ -22,6 +23,7 @@ public class Evento {
         this.data = data;
         this.participantes = new ArrayList<>();
         this.dataCriacao = LocalDateTime.now();
+        this.comparecimento_evento = comparecimento_evento;
     }
 
     public void inscrever(Participante p) {
@@ -35,5 +37,7 @@ public class Evento {
     public int getTotalInscritos() { return participantes.size(); }
     public int getCapacidadeMax() { return capacidadeMax; }
     public String getNome() { return nome; }
+    public LocalDateTime getData() { return data; }
     public LocalDateTime getDataCriacao() { return dataCriacao; }
+    public int getComparecimentoEvento() { return comparecimento_evento; }
 }
