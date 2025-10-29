@@ -8,6 +8,7 @@ import java.util.List;
 public class Evento {
     private String nome;
     private int capacidadeMax;
+    private double valor_evento;
     private String tipo;
     private Local local;
     private LocalDateTime data;
@@ -15,10 +16,11 @@ public class Evento {
     private List<Participante> participantes;
     private int comparecimento_evento;
 
-    public Evento(String nome, Local local, int capacidadeMax, String tipo, LocalDateTime data, int comparecimento_evento) {
+    public Evento(String nome, Local local, int capacidadeMax, double valor_evento, String tipo, LocalDateTime data, int comparecimento_evento) {
         this.nome = nome;
         this.local = local;
         this.capacidadeMax = capacidadeMax;
+        this.valor_evento = valor_evento;
         this.tipo = tipo;
         this.data = data;
         this.participantes = new ArrayList<>();
@@ -36,6 +38,7 @@ public class Evento {
 
     public int getTotalInscritos() { return participantes.size(); }
     public int getCapacidadeMax() { return capacidadeMax; }
+    public double getValorEvento() { return valor_evento; }
     public String getNome() { return nome; }
     public LocalDateTime getData() { return data; }
     public LocalDateTime getDataCriacao() { return dataCriacao; }
