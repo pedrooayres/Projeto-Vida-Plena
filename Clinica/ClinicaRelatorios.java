@@ -33,4 +33,10 @@ public class ClinicaRelatorios {
                 .map(Map.Entry::getKey)
                 .orElse("Nenhum registro de faltas");
     } 
+    /* metodos respostas - clinica
+     * perguntas 
+     * 1 - horarios de ocupação para cada medico, 2- dia com mais falta, 3- medico mais requisito
+     * 4 - qual  dia do semana tem mais atividade, 5 - renda mensal ,6 - faixa de horario mais movimentada
+     *7- gasto de cada pessoa, 8 - qual data com maior numero de atividade, 9 - percentual de presença
+    */
 }
