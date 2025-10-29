@@ -4,21 +4,26 @@ import java.time.LocalDateTime;
 
 public class Agenda {
     private LocalDateTime dataHora;
-    private Local local;
     private String status;
 
-    public Agenda(LocalDateTime dataHora, Local local, String status) {
+    public Agenda(LocalDateTime dataHora, String status) {
         this.dataHora = dataHora;
-        this.local = local;
         this.status = status;
     }
 
-    public LocalDateTime getDataHora() { return dataHora; }
-    public Local getLocal() { return local; }
-    public String getStatus() { return status; }
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
 
-    @Override
-    public String toString() {
-        return "Data/Hora: " + dataHora + " | Local: " + local.getNome() + " | Status: " + status;
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
