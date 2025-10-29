@@ -126,7 +126,7 @@ public class Main {
     System.out.println("\n--- CLINICA ---");
     System.out.println("1. Cadastrar Medico");
     System.out.println("2. Cadastrar Paciente");
-    System.out.println("3. Agendar Consulta");
+    System.out.println("3. Registrar consulta");
     System.out.println("0. Voltar");
     int opcao = sc.nextInt(); sc.nextLine();
 
@@ -152,15 +152,15 @@ public class Main {
             break;
         }
         case 3 -> {
-            System.out.println("Qual seu nome :"); String nome = sc.nextLine();
+            System.out.println("Nome do paciente: "); String nome = sc.nextLine();
             Paciente paciente = buscarPacientePorNome(nome);
             if (paciente == null) {
                 System.out.println("Paciente nao encontrado. Cadastre o paciente primeiro (opçao 2 do menu Clínica).");
                 break;
             }
-            System.out.println("Qual dia deseja marcar a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
-            System.out.println("Que horas deseja marcar a consulta (HH/MM)"); String hora = sc.nextLine();
-            System.out.println("Que medico deseja se consultar "); String nomemed = sc.nextLine();
+            System.out.println("Qual foi o dia da consulta? Inserir no formato: (DD/MM/AAAA)"); String data = sc.nextLine();
+            System.out.println("Qual foi o horario da consulta? Inserir no formato: (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Qual foi o medico escolhido pelo paciente? "); String nomemed = sc.nextLine();
             Medico medico = buscarMedicoPorNome(nomemed);
             if (medico == null) {
                 System.out.println("Medico não encontrado. Cadastre o medico primeiro (opção 1 do menu Clinica).");
@@ -196,7 +196,7 @@ public class Main {
 
             Consulta c = new Consulta(paciente, medico, agenda, valorConsulta, comparecimento_consulta);
             listaConsultas.add(c);
-            System.out.println("Consulta marcada com sucesso");
+            System.out.println("Consulta registrada com sucesso");
             break;
             }
         }
