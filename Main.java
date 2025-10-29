@@ -126,7 +126,7 @@ public class Main {
     System.out.println("\n--- CLINICA ---");
     System.out.println("1. Cadastrar Medico");
     System.out.println("2. Cadastrar Paciente");
-    System.out.println("3. Registrar consulta");
+    System.out.println("3. Agendar Consulta");
     System.out.println("0. Voltar");
     int opcao = sc.nextInt(); sc.nextLine();
 
@@ -152,15 +152,15 @@ public class Main {
             break;
         }
         case 3 -> {
-            System.out.println("Nome do paciente: "); String nome = sc.nextLine();
+            System.out.println("Qual seu nome :"); String nome = sc.nextLine();
             Paciente paciente = buscarPacientePorNome(nome);
             if (paciente == null) {
                 System.out.println("Paciente nao encontrado. Cadastre o paciente primeiro (opçao 2 do menu Clínica).");
                 break;
             }
-            System.out.println("Qual foi o dia da consulta? Inserir no formato: (DD/MM/AAAA)"); String data = sc.nextLine();
-            System.out.println("Qual foi o horario da consulta? Inserir no formato: (HH/MM)"); String hora = sc.nextLine();
-            System.out.println("Qual foi o medico escolhido pelo paciente? "); String nomemed = sc.nextLine();
+            System.out.println("Qual dia deseja marcar a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
+            System.out.println("Que horas deseja marcar a consulta (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Que medico deseja se consultar "); String nomemed = sc.nextLine();
             Medico medico = buscarMedicoPorNome(nomemed);
             if (medico == null) {
                 System.out.println("Medico não encontrado. Cadastre o medico primeiro (opção 1 do menu Clinica).");
@@ -170,20 +170,15 @@ public class Main {
             int dia = Integer.parseInt(partesData[0]);
             int mes = Integer.parseInt(partesData[1]);
             int ano = Integer.parseInt(partesData[2]);
-
             String[] partesHora = hora.split(":"); // ["14","30"]
             int hh = Integer.parseInt(partesHora[0]);
             int mm = Integer.parseInt(partesHora[1]);
-
             LocalDateTime dataHoraConsulta = LocalDateTime.of(ano, mes, dia, hh, mm);
-
-            Agenda agenda = new Agenda(dataHoraConsulta, "AGENDADA");
+            Agenda agenda_consulta = new Agenda(dataHoraConsulta, "AGENDADA");
             double valorConsulta = 300.00;
-
             int comparecimento_consulta = 0;
             char opcao_s_ou_n;
             System.out.println("O paciente faltou a consulta?: S/N"); opcao_s_ou_n = sc.next().charAt(0);
-
             if(opcao_s_ou_n != ('S') && opcao_s_ou_n != ('N')) {
                 System.out.println("Opcao invalida, digite S para sim, N para nao");
             } else {
@@ -194,9 +189,9 @@ public class Main {
                 }
             }
 
-            Consulta c = new Consulta(paciente, medico, agenda, valorConsulta, comparecimento_consulta);
+            Consulta c = new Consulta(paciente, medico, agenda_consulta, valorConsulta, comparecimento_consulta);
             listaConsultas.add(c);
-            System.out.println("Consulta registrada com sucesso");
+            System.out.println("Consulta marcada com sucesso");
             break;
             }
         }
@@ -212,6 +207,7 @@ public class Main {
         case 1 -> {
             System.out.print("Nome do evento: "); String nome = sc.nextLine();
             System.out.print("Capacidade maxima: "); int cap = sc.nextInt(); sc.nextLine();
+            System.out.print("Valor do evento: "); double valorEvento = sc.nextDouble();
             System.out.print("Tipo: "); String tipo = sc.nextLine();
             System.out.println("Data: (DD/MM/AAAA)"); String data = sc.nextLine();
             // quebra "28/10/2025" em [ "28", "10", "2025" ]
@@ -235,7 +231,7 @@ public class Main {
                     comparecimento_evento = -1;
                 }
             }
-            Evento ev = new Evento(nome, local, cap, tipo, dataHoraEvento, comparecimento_evento);
+            Evento ev = new Evento(nome, local, cap, valorEvento, tipo, dataHoraEvento, comparecimento_evento);
             listaEventos.add(ev);
             System.out.println("Evento criado: " + ev.getNome());
         }
@@ -278,8 +274,19 @@ public class Main {
                 System.out.print("Preço: "); double preco = sc.nextDouble(); sc.nextLine();
                 System.out.print("Categoria: "); String categoria = sc.nextLine();
                 System.out.print("Calorias: "); int calorias = sc.nextInt(); sc.nextLine();
+                System.out.println("Qual dia foi feito o pedido (DD/MM/AAAA)"); String data = sc.nextLine();
+                System.out.println("Qual horario foi feito o pedido (DD/MM/AAAA)"); String hora = sc.nextLine();
+                String[] partesData = data.split("/"); // ["28","10","2025"]
+                int dia = Integer.parseInt(partesData[0]);
+                int mes = Integer.parseInt(partesData[1]);
+                int ano = Integer.parseInt(partesData[2]);
+                String[] partesHora = hora.split(":"); // ["14","30"]
+                int hh = Integer.parseInt(partesHora[0]);
+                int mm = Integer.parseInt(partesHora[1]);
+                LocalDateTime dataHoraPedido = LocalDateTime.of(ano, mes, dia, hh, mm);
+                Agenda agenda_pedido = new Agenda(dataHoraPedido, "DATA DO PEDIDO CONFIRMADA");
                 Prato prato = new Prato(nome, preco, categoria, calorias);
-                listaPedidos.get(0).adicionarPrato(prato);
+                listaPedidos.get(0).adicionarPrato(prato, agenda_pedido);
                 System.out.println("Prato adicionado ao pedido.");
             }
         }
