@@ -72,15 +72,16 @@ public class Main {
 
     private static void menuRelatorios(List<Consulta> listaConsultas, List<Evento> listaEventos, List<Pedido> listaPedidos) {
         System.out.println("\n--- RELATORIOS ---");
-        System.out.println("1. Quais medicos e eventos tem maior ocupaçao nos mesmos horarios?");
+        System.out.println("1. Qual é o médico com o maior número de consultas registradas?");
         System.out.println("2. Horario com mais faltas");
         System.out.println("3. Evento com mais inscritos");
-        System.out.println("4. Prato mais vendido (manha)");
+        System.out.println("4. Qual é o prato mais vendido?");
         System.out.println("5. Que tipo de serviço gera maior renda mensal");
         System.out.println("6. Qual faixa de horario mais frenquentada em cada setor");
         System.out.println("7. Quais clientes possuem mais gastos total (clinica + eventos + restaurante)");
         System.out.println("8. Quais datas apresentam maior volume de atividades simultaneas entre areas diferentes");
         System.out.println("9. Qual eh o percentual de comparecimento em relação as agendas criadas");
+        System.out.println("10. Quais medicos e eventos tem maior ocupaçao nos mesmos horarios?");
         System.out.println("0. Voltar");
         int opcao = sc.nextInt();
         sc.nextLine();
@@ -119,6 +120,8 @@ public class Main {
             case 9 -> {
 
             }
+            case 10 -> {
+            }
         }
     }
 
@@ -126,7 +129,7 @@ public class Main {
     System.out.println("\n--- CLINICA ---");
     System.out.println("1. Cadastrar Medico");
     System.out.println("2. Cadastrar Paciente");
-    System.out.println("3. Agendar Consulta");
+    System.out.println("3. Registrar consulta");
     System.out.println("0. Voltar");
     int opcao = sc.nextInt(); sc.nextLine();
 
@@ -158,9 +161,9 @@ public class Main {
                 System.out.println("Paciente nao encontrado. Cadastre o paciente primeiro (opçao 2 do menu Clínica).");
                 break;
             }
-            System.out.println("Qual dia deseja marcar a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
-            System.out.println("Que horas deseja marcar a consulta (HH/MM)"); String hora = sc.nextLine();
-            System.out.println("Que medico deseja se consultar "); String nomemed = sc.nextLine();
+            System.out.println("Em qual dia ocorreu a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
+            System.out.println("Em qual horario ocorreu a consulta (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Qual medico realizou a consulta "); String nomemed = sc.nextLine();
             Medico medico = buscarMedicoPorNome(nomemed);
             if (medico == null) {
                 System.out.println("Medico não encontrado. Cadastre o medico primeiro (opção 1 do menu Clinica).");
@@ -191,7 +194,7 @@ public class Main {
 
             Consulta c = new Consulta(paciente, medico, agenda_consulta, valorConsulta, comparecimento_consulta);
             listaConsultas.add(c);
-            System.out.println("Consulta marcada com sucesso");
+            System.out.println("Consulta registrada com sucesso");
             break;
             }
         }
