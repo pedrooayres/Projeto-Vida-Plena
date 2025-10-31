@@ -72,16 +72,15 @@ public class Main {
 
     private static void menuRelatorios(List<Consulta> listaConsultas, List<Evento> listaEventos, List<Pedido> listaPedidos) {
         System.out.println("\n--- RELATORIOS ---");
-        System.out.println("1. Qual é o médico com o maior número de consultas registradas?");
+        System.out.println("1. Quais medicos e eventos tem maior ocupaçao nos mesmos horarios?");
         System.out.println("2. Horario com mais faltas");
         System.out.println("3. Evento com mais inscritos");
-        System.out.println("4. Qual é o prato mais vendido?");
-        System.out.println("5. Que tipo de serviço gera maior renda mensal");
+        System.out.println("4. Prato mais vendido (manha)");
+        System.out.println("5. Quais médicos e eventos têm maior ocupação no mesmo dia?");
         System.out.println("6. Qual faixa de horario mais frenquentada em cada setor");
         System.out.println("7. Quais clientes possuem mais gastos total (clinica + eventos + restaurante)");
         System.out.println("8. Quais datas apresentam maior volume de atividades simultaneas entre areas diferentes");
         System.out.println("9. Qual eh o percentual de comparecimento em relação as agendas criadas");
-        System.out.println("10. Quais medicos e eventos tem maior ocupaçao nos mesmos horarios?");
         System.out.println("0. Voltar");
         int opcao = sc.nextInt();
         sc.nextLine();
@@ -91,7 +90,23 @@ public class Main {
                 Medico m = ClinicaRelatorios.medicoMaisOcupado(listaConsultas);
                 System.out.println(" Medico :" + m);
             }
-            case 2 -> System.out.println("Horario com mais faltas: " + ClinicaRelatorios.horarioComMaisFaltas(listaConsultas));
+            
+            /*int tamanho_lista_consulta = listaConsultas.size();
+            final List<Agenda> lista_horario_faltas = new ArrayList<>(tamanho_lista_consulta);
+            for(int i = 0; i < tamanho_lista_consulta; i++) {
+                int comparecimento_consulta_posicao_da_lista = listaConsultas.get(i).comparecimento_consulta;
+                if(comparecimento_consulta_posicao_da_lista < 0) {
+                    lista_horario_faltas.add(listaConsultas.get(i).agenda_consulta);
+                }
+            }
+            int tamanho_lista_horario_faltas = lista_horario_faltas.size();
+
+            for(int j = 0; j < tamanho_lista_horario_faltas; j++) {
+                lista_horario_faltas(j);
+            }*/
+            
+            case 2 -> {System.out.println("Horario com mais faltas consulta: " /* + */);
+            }
             case 3 -> {
                 Evento e = EventosRelatorios.eventoComMaisInscritos(listaEventos);
                 System.out.println(e != null ? "Evento com mais inscritos: " + e.getNome() : "Nenhum evento encontrado");
@@ -102,7 +117,7 @@ public class Main {
             }
 
             case 5 -> {
-                
+                relatorios.relatorioChoquesMedicoEvento();
             }
 
             case 6 -> {
@@ -120,8 +135,6 @@ public class Main {
             case 9 -> {
 
             }
-            case 10 -> {
-            }
         }
     }
 
@@ -129,7 +142,7 @@ public class Main {
     System.out.println("\n--- CLINICA ---");
     System.out.println("1. Cadastrar Medico");
     System.out.println("2. Cadastrar Paciente");
-    System.out.println("3. Registrar consulta");
+    System.out.println("3. Agendar Consulta");
     System.out.println("0. Voltar");
     int opcao = sc.nextInt(); sc.nextLine();
 
@@ -155,18 +168,18 @@ public class Main {
             break;
         }
         case 3 -> {
-            System.out.println("Qual seu nome :"); String nome = sc.nextLine();
+            System.out.println("Nome do paciente :"); String nome = sc.nextLine();
             Paciente paciente = buscarPacientePorNome(nome);
             if (paciente == null) {
-                System.out.println("Paciente nao encontrado. Cadastre o paciente primeiro (opçao 2 do menu Clínica).");
+                System.out.println("Paciente nao encontrado. Registre o paciente primeiro (opçao 2 do menu Clínica).");
                 break;
             }
-            System.out.println("Em qual dia ocorreu a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
-            System.out.println("Em qual horario ocorreu a consulta (HH/MM)"); String hora = sc.nextLine();
-            System.out.println("Qual medico realizou a consulta "); String nomemed = sc.nextLine();
+            System.out.println("Dia em que a consulta ocorreu (DD/MM/AAAA)"); String data = sc.nextLine();
+            System.out.println("Horario em que a consulta ocorreu (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Qual medico realizou a consulta? "); String nomemed = sc.nextLine();
             Medico medico = buscarMedicoPorNome(nomemed);
             if (medico == null) {
-                System.out.println("Medico não encontrado. Cadastre o medico primeiro (opção 1 do menu Clinica).");
+                System.out.println("Medico não encontrado. Registre o medico primeiro (opção 1 do menu Clinica).");
                 break;
             }
             String[] partesData = data.split("/"); // ["28","10","2025"]
@@ -177,7 +190,7 @@ public class Main {
             int hh = Integer.parseInt(partesHora[0]);
             int mm = Integer.parseInt(partesHora[1]);
             LocalDateTime dataHoraConsulta = LocalDateTime.of(ano, mes, dia, hh, mm);
-            Agenda agenda_consulta = new Agenda(dataHoraConsulta, "AGENDADA");
+            Agenda agenda_consulta = new Agenda(dataHoraConsulta, "REGISTRADO");
             double valorConsulta = 300.00;
             int comparecimento_consulta = 0;
             char opcao_s_ou_n;
@@ -223,7 +236,7 @@ public class Main {
             LocalDateTime dataHoraEvento = LocalDateTime.of(ano, mes, dia, 0, 0);
             int comparecimento_evento = 0;
             char opcao_s_ou_n;
-            System.out.println("O participante faltou o evento?: S/N"); opcao_s_ou_n = sc.next().charAt(0);
+            System.out.println("Confirmar participacao no evento (participante): S/N"); opcao_s_ou_n = sc.next().charAt(0);
 
             if(opcao_s_ou_n != ('S') && opcao_s_ou_n != ('N')) {
                 System.out.println("Opcao invalida, digite S para sim, N para nao");
