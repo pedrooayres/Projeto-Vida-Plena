@@ -113,8 +113,8 @@ Restaurante --> Pedido
 | Integrante | Módulo | Função |
 |-------------|--------|--------|
 | 🧠 **Pedro Henrique Mendonça Ayres** | Eventos | Relatórios e integração com clínica/restaurante |
-| 💉 **[Nome do colega 1]** | Clínica | Consultas, pacientes e relatórios |
-| 🍽️ **[Nome do colega 2]** | Restaurante | Pedidos, faturamento e relatórios |
+| 💉 **Diogo Fonseca** | Clínica | Consultas, pacientes e relatórios |
+| 🍽️ **João Gabriel** | Restaurante | Pedidos, faturamento e relatórios |
 
 📅 **Apresentação:** *31 de outubro de 2025 — Halloween*  
 💬 *Que os bugs não te assustem e os testes rodem à meia-noite!* 🦇  
