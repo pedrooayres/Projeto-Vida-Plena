@@ -8,8 +8,7 @@ import java.util.*;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
-
-
+    
     static List<Consulta> listaConsultas = new ArrayList<>();
     static List<Evento> listaEventos = new ArrayList<>();
     static List<Pedido> listaPedidos = new ArrayList<>();
@@ -86,11 +85,10 @@ public class Main {
         sc.nextLine();
 
         switch (opcao) {
-            case 1 -> {
-                Medico m = ClinicaRelatorios.medicoMaisOcupado(listaConsultas);
-                System.out.println(" Medico :" + m);
-            }
-            
+    case 1:
+        Medico m = ClinicaRelatorios.medicoMaisOcupado(listaConsultas);
+        System.out.println("Médico: " + m);
+        break;
             /*int tamanho_lista_consulta = listaConsultas.size();
             final List<Agenda> lista_horario_faltas = new ArrayList<>(tamanho_lista_consulta);
             for(int i = 0; i < tamanho_lista_consulta; i++) {
@@ -104,39 +102,49 @@ public class Main {
             for(int j = 0; j < tamanho_lista_horario_faltas; j++) {
                 lista_horario_faltas(j);
             }*/
-            
-            case 2 -> {System.out.println("Horario com mais faltas consulta: " /* + */);
-            }
-            case 3 -> {
-                Evento e = EventosRelatorios.eventoComMaisInscritos(listaEventos);
-                System.out.println(e != null ? "Evento com mais inscritos: " + e.getNome() : "Nenhum evento encontrado");
-            }
-            case 4 -> {
-                Prato p = RestauranteRelatorios.pratoMaisVendidoPorPeriodo(listaPedidos, "manha");
-                System.out.println(p != null ? "Prato mais vendido de manha: " + p.getNome() : "Nenhum prato encontrado");
-            }
+    case 2:
+       System.out.println("Horário com mais faltas consulta: " + horarioMaisFaltas);
 
-            case 5 -> {
-                relatorios.relatorioChoquesMedicoEvento();
-            }
+        break;
 
-            case 6 -> {
+    case 3:
+        Evento e = EventosRelatorios.eventoComMaisInscritos(listaEventos);
+        System.out.println(e != null
+                ? "Evento com mais inscritos: " + e.getNome()
+                : "Nenhum evento encontrado");
+        break;
 
-            }
+    case 4:
+        Prato p = RestauranteRelatorios.pratoMaisVendidoPorPeriodo(listaPedidos, "manha");
+        System.out.println(p != null
+                ? "Prato mais vendido de manhã: " + p.getNome()
+                : "Nenhum prato encontrado");
+        break;
 
-            case 7 -> {
+    case 5:
+        relatorios.relatorioChoquesMedicoEvento();
+        break;
 
-            }
+    case 6:
+        // Implementar lógica aqui se necessário
+        break;
 
-            case 8 -> {
+    case 7:
+        // Implementar lógica aqui se necessário
+        break;
 
-            }
+    case 8:
+        // Implementar lógica aqui se necessário
+        break;
 
-            case 9 -> {
-
-            }
+    case 9:
+        // Implementar lógica aqui se necessário
+        break;
+    default:
+        System.out.println("Opção inválida!");
+        break;
         }
-    }
+}
 
    private static void menuClinica(List<Consulta> listaConsultas) {
     System.out.println("\n--- CLINICA ---");
@@ -168,15 +176,15 @@ public class Main {
             break;
         }
         case 3 -> {
-            System.out.println("Nome do paciente :"); String nome = sc.nextLine();
+            System.out.println("Qual seu nome :"); String nome = sc.nextLine();
             Paciente paciente = buscarPacientePorNome(nome);
             if (paciente == null) {
                 System.out.println("Paciente nao encontrado. Registre o paciente primeiro (opçao 2 do menu Clínica).");
                 break;
             }
-            System.out.println("Dia em que a consulta ocorreu (DD/MM/AAAA)"); String data = sc.nextLine();
-            System.out.println("Horario em que a consulta ocorreu (HH/MM)"); String hora = sc.nextLine();
-            System.out.println("Qual medico realizou a consulta? "); String nomemed = sc.nextLine();
+            System.out.println("Qual dia deseja registrar a consulta (DD/MM/AAAA)"); String data = sc.nextLine();
+            System.out.println("Que horas deseja registrar a consulta (HH/MM)"); String hora = sc.nextLine();
+            System.out.println("Que medico deseja se consultar "); String nomemed = sc.nextLine();
             Medico medico = buscarMedicoPorNome(nomemed);
             if (medico == null) {
                 System.out.println("Medico não encontrado. Registre o medico primeiro (opção 1 do menu Clinica).");
