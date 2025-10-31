@@ -5,9 +5,9 @@ import Base.Agenda;
 public class Consulta {
     private Paciente paciente;
     private Medico medico;
-    private Agenda agenda_consulta;
+    public Agenda agenda_consulta;
     private double valor_consulta;
-    private int comparecimento_consulta;
+    public int comparecimento_consulta;
 
     public Consulta(Paciente paciente, Medico medico, Agenda agenda_consulta, double valor_consulta, int comparecimento_consulta) {
         this.paciente = paciente;
