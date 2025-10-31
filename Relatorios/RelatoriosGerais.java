@@ -1,13 +1,10 @@
 package Relatorios;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import Base.*;
 import Clinica.*;
 import Eventos.*;
 import Restaurante.*;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class RelatoriosGerais {
 
@@ -91,4 +88,9 @@ public class RelatoriosGerais {
 
         System.out.println("\n===============================================================\n");
     }
+
+// ---- PERGUNTA 2 ----
+
+//public void ();
+
 }
