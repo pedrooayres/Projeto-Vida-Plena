@@ -13,8 +13,24 @@ public class Prato {
         this.calorias = calorias;
     }
 
-    public String getNome() { return nome; }
-    public double getPreco() { return preco; }
-    public String getCategoria() { return categoria; }
-    public int getCalorias() { return calorias; }
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public int getCalorias() {
+        return calorias;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + categoria + ") - R$ " + preco + " - " + calorias + " kcal";
+    }
 }
