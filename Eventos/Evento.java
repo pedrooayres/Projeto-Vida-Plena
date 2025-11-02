@@ -14,9 +14,9 @@ public class Evento {
     private LocalDateTime data;
     private LocalDateTime dataCriacao;
     private List<Participante> participantes;
-    private int comparecimento_evento;
+    private boolean comparecimento_evento;
 
-    public Evento(String nome, Local local, int capacidadeMax, double valor_evento, String tipo, LocalDateTime data, int comparecimento_evento) {
+    public Evento(String nome, Local local, int capacidadeMax, double valor_evento, String tipo, LocalDateTime data, boolean comparecimento_evento) {
         this.nome = nome;
         this.local = local;
         this.capacidadeMax = capacidadeMax;
@@ -36,11 +36,38 @@ public class Evento {
         }
     }
 
-    public int getTotalInscritos() { return participantes.size(); }
-    public int getCapacidadeMax() { return capacidadeMax; }
-    public double getValorEvento() { return valor_evento; }
-    public String getNome() { return nome; }
-    public LocalDateTime getData() { return data; }
-    public LocalDateTime getDataCriacao() { return dataCriacao; }
-    public int getComparecimentoEvento() { return comparecimento_evento; }
+    // ==================== GETTERS ====================
+
+    public int getTotalInscritos() { 
+        return participantes.size(); 
+    }
+
+    public int getCapacidadeMax() { 
+        return capacidadeMax; 
+    }
+
+    public double getValorEvento() { 
+        return valor_evento; 
+    }
+
+    public String getNome() { 
+        return nome; 
+    }
+
+    public LocalDateTime getData() { 
+        return data; 
+    }
+
+    public LocalDateTime getDataCriacao() { 
+        return dataCriacao; 
+    }
+
+    public boolean getComparecimentoEvento() { 
+        return comparecimento_evento; 
+    }
+
+    // ✅ NOVO MÉTODO — compatível com o Main.java
+    public LocalDateTime getDataHoraEvento() {
+        return data;
+    }
 }
