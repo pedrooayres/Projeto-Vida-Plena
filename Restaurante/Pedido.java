@@ -1,9 +1,8 @@
 package Restaurante;
 
+import Base.Agenda;
 import java.util.ArrayList;
 import java.util.List;
-
-import Base.Agenda;
 
 public class Pedido {
     private List<Prato> itens = new ArrayList<>();
@@ -14,10 +13,30 @@ public class Pedido {
         this.agenda_pedido = agenda_pedido;
     }
 
-    public List<Prato> getItens() { return itens; }
-    public Agenda getAgenda() { return agenda_pedido; }
+    public List<Prato> getItens() {
+        return itens;
+    }
 
+    public Agenda getAgenda() {
+        return agenda_pedido;
+    }
+
+    // 🔹 Alias para compatibilidade com Main.java
+    public List<Prato> getPratos() {
+        return getItens();
+    }
+
+    // 🔹 Alias para compatibilidade com Main.java
+    public Agenda getAgendaPedido() {
+        return getAgenda();
+    }
+
+    // ✅ Versão corrigida com loop for
     public double calcularTotal() {
-        return itens.stream().mapToDouble(Prato::getPreco).sum();
+        double total = 0.0;
+        for (Prato p : itens) {
+            total += p.getPreco();
+        }
+        return total;
     }
 }
