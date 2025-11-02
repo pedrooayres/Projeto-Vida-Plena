@@ -91,6 +91,4 @@ public class RelatoriosGerais {
 
 // ---- PERGUNTA 2 ----
 
-//public void ();
-
 }
