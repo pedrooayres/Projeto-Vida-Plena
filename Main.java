@@ -105,54 +105,7 @@ public class Main {
             case 5 -> relatorios.relatorioChoquesMedicoEvento();
             case 6, 7, 8, 9 -> System.out.println("Função ainda não implementada.");
             case 10 -> {
-                if (listaEventos.isEmpty() || listaPedidos.isEmpty()) {
-                    System.out.println("É necessário ter ao menos um evento e um pedido registrados.");
-                    break;
-                }
-
-                System.out.print("Digite o nome do evento gastronômico: ");
-                String nomeEvento = sc.nextLine();
-                Evento evento = buscarEventoPorNome(nomeEvento);
-
-                if (evento == null) {
-                    System.out.println("Evento não encontrado.");
-                    break;
-                }
-
-                var dataEvento = evento.getDataHoraEvento().toLocalDate();
-                List<Pedido> pedidosPosteriores = new ArrayList<>();
-
-                for (Pedido pedido : listaPedidos) {
-                    if (pedido.getAgendaPedido() == null) continue; // evita nullpointer
-                    var dataPedido = pedido.getAgendaPedido().getDataHora().toLocalDate();
-                    if (dataPedido.isAfter(dataEvento)) {
-                        pedidosPosteriores.add(pedido);
-                    }
-                }
-
-                if (pedidosPosteriores.isEmpty()) {
-                    System.out.println("Nenhum pedido foi feito após o evento (" + dataEvento + ").");
-                    break;
-                }
-
-                double soma = 0;
-                int totalPratos = 0;
-
-                for (Pedido pedido : pedidosPosteriores) {
-                    for (Prato prato : pedido.getPratos()) {
-                        soma += prato.getPreco();
-                        totalPratos++;
-                    }
-                }
-
-                double media = soma / totalPratos;
-
-                System.out.println("\n=== Relatório: Impacto Pós-Evento ===");
-                System.out.println("Evento: " + evento.getNome());
-                System.out.println("Data do evento: " + dataEvento);
-                System.out.println("Pedidos feitos após o evento: " + pedidosPosteriores.size());
-                System.out.println("Total de pratos analisados: " + totalPratos);
-                System.out.printf("Preço médio dos pedidos após o evento: R$ %.2f%n", media);
+                RestauranteRelatorios.mediaPedidosEvento(listaEventos, listaPedidos, sc);
             }
             case 0 -> System.out.println("Voltando ao menu principal...");
             default -> System.out.println("Opção inválida.");
