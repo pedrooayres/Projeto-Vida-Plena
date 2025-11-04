@@ -7,9 +7,9 @@ public class Consulta {
     private Medico medico;
     public Agenda agenda_consulta;
     private double valor_consulta;
-    public int comparecimento_consulta;
+    public boolean comparecimento_consulta;
 
-    public Consulta(Paciente paciente, Medico medico, Agenda agenda_consulta, double valor_consulta, int comparecimento_consulta) {
+    public Consulta(Paciente paciente, Medico medico, Agenda agenda_consulta, double valor_consulta, boolean comparecimento_consulta) {
         this.paciente = paciente;
         this.medico = medico;
         this.agenda_consulta = agenda_consulta;
@@ -21,5 +21,5 @@ public class Consulta {
     public Paciente getPaciente() { return paciente; }
     public Agenda getAgenda() { return agenda_consulta; }
     public double getValor() { return valor_consulta; }
-    public int getComparecimento_Consulta() {return comparecimento_consulta; }
+    public boolean getComparecimento_Consulta() {return comparecimento_consulta; }
 }
