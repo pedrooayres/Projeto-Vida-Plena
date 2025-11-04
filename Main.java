@@ -105,7 +105,7 @@ public class Main {
             case 5 -> relatorios.relatorioChoquesMedicoEvento();
             case 6, 7, 8, 9 -> System.out.println("Função ainda não implementada.");
             case 10 -> {
-                RestauranteRelatorios.mediaPedidosEvento(listaEventos, listaPedidos, sc);
+                RelatoriosGerais.mediaPedidosEvento(listaEventos, listaPedidos, sc);
             }
             case 0 -> System.out.println("Voltando ao menu principal...");
             default -> System.out.println("Opção inválida.");
