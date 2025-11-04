@@ -59,15 +59,15 @@ Durante o desenvolvimento, o grupo criou **9 perguntas estratégicas** que cruza
 
 | # | Pergunta | Sistemas Envolvidos |
 |:-:|-----------|---------------------|
-| 1 | Quais médicos e eventos têm maior ocupação nos mesmos horários? | Clínica + Eventos |
-| 2 | Qual o dia com mais faltas na clínica e nos eventos? | Clínica + Eventos |
-| 3 | Médicos/eventos mais requisitados. | Clínica + Eventos |
-| 4 | Quais dias da semana têm maior concentração de atividades em todas as áreas? | Clínica + Eventos + Restaurante |
-| 5 | Qual tipo de serviço gera mais receita mensal? | Clínica + Eventos + Restaurante |
-| 6 | Qual faixa de horário é mais movimentada em todos os setores? | Clínica + Eventos + Restaurante |
-| 7 | Quais clientes possuem maior gasto total somando consultas, eventos e pedidos? | Clínica + Eventos + Restaurante |
-| 8 | Quais datas apresentam maior volume de atividades simultâneas? | Clínica + Eventos + Restaurante |
-| 9 | Qual o percentual de comparecimento em relação às agendas criadas? | Clínica + Eventos + Restaurante |
+1- Quais médicos e eventos têm maior ocupação no mesmo dia?
+2 - Algum paciente que faltou na clínica, compareceu ao evento?
+3- O cliente da clínica que visita pelo menos um evento, tem um gasto maior na clínica ou no evento
+4 - Um medico da clínica fez a recomendação de um prato do restaurante em um determinado dia, após esse dia quantos pedidos desse prato foram feitos ?
+5- Qual tipo de serviço (clínico, evento ou restaurante) gera mais receita mensal?
+6-Qual horário mais frequentado no restaurante e consultório
+7- Em determinado evento com participação do restaurante em um certo dia, qual o preço médio dos pedidos feitos para o evento nesse dia ?
+8-Quais clientes estão envolvidos em mais de um serviço?
+9- -Qual é o percentual de comparecimento em relação às agendas criadas (consultas realizadas e eventos confirmados)?
 
 ---
 
