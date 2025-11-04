@@ -36,38 +36,14 @@ public class Evento {
         }
     }
 
-    // ==================== GETTERS ====================
+    public int getTotalInscritos() { return participantes.size(); }
+    public int getCapacidadeMax() { return capacidadeMax; }
+    public double getValorEvento() { return valor_evento; }
+    public String getNome() { return nome; }
+    public LocalDateTime getData() { return data; }
+    public LocalDateTime getDataCriacao() { return dataCriacao; }
+    public boolean getComparecimentoEvento() { return comparecimento_evento; }
 
-    public int getTotalInscritos() { 
-        return participantes.size(); 
-    }
-
-    public int getCapacidadeMax() { 
-        return capacidadeMax; 
-    }
-
-    public double getValorEvento() { 
-        return valor_evento; 
-    }
-
-    public String getNome() { 
-        return nome; 
-    }
-
-    public LocalDateTime getData() { 
-        return data; 
-    }
-
-    public LocalDateTime getDataCriacao() { 
-        return dataCriacao; 
-    }
-
-    public boolean getComparecimentoEvento() { 
-        return comparecimento_evento; 
-    }
-
-    // ✅ NOVO MÉTODO — compatível com o Main.java
-    public LocalDateTime getDataHoraEvento() {
-        return data;
-    }
+    // NOVO MÉTODO — compatível com o Main.java
+    public LocalDateTime getDataHoraEvento() { return data; }
 }
