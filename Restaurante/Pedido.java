@@ -21,17 +21,17 @@ public class Pedido {
         return agenda_pedido;
     }
 
-    // 🔹 Alias para compatibilidade com Main.java
+    //  Alias para compatibilidade com Main.java
     public List<Prato> getPratos() {
         return getItens();
     }
 
-    // 🔹 Alias para compatibilidade com Main.java
+    //  Alias para compatibilidade com Main.java
     public Agenda getAgendaPedido() {
         return getAgenda();
     }
 
-    // ✅ Versão corrigida com loop for
+    // Versão corrigida com loop for
     public double calcularTotal() {
         double total = 0.0;
         for (Prato p : itens) {
