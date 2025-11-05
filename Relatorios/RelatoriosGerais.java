@@ -150,6 +150,7 @@ public class RelatoriosGerais {
         System.out.println("Pedidos do prato após essa data: " + contador);
     }
 
+    // ---- Pergunta 11 ----
     // ---- RELATÓRIO DE PEDIDOS NO DIA DO EVENTO ----
     public static void mediaPedidosEvento(List<Evento> listaEventos, List<Pedido> listaPedidos, Scanner sc) {
         if (listaEventos.isEmpty() || listaPedidos.isEmpty()) {
@@ -214,6 +215,8 @@ public class RelatoriosGerais {
         System.out.printf("Preço médio dos pedidos durante o evento: R$ %.2f%n", media);
     }
 
+
+    // ---- Pergunta 12 ----
     // ---- CLIENTES EM MAIS DE UM SERVIÇO ----
     public static Map<String, ClienteMultiServico> clientesEmMaisDeUmServico(List<Consulta> consultas, List<Evento> eventos) {
         Map<String, String> nomeOriginalPaciente = new HashMap<>();
