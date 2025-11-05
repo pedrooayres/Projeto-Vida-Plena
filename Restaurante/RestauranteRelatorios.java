@@ -17,11 +17,6 @@ public class RestauranteRelatorios {
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
-     
-    /* metodos respostas - restuarante
-    4- dia da com maior concentração de eventos, 5-  renda mensal, 6- qual faixa de horario mais movimentada
-    7- gasto de cada pessoa,  8-qual data com maior numero de atividade, 9- percentual de presença
-    */
     public static Pessoa clienteMaisConsumiu(Map<Pessoa, List<Pedido>> pedidosPorCliente) {
         return pedidosPorCliente.entrySet().stream()
                 .max(Comparator.comparingDouble(e -> e.getValue().stream()
