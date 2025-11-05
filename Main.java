@@ -119,11 +119,11 @@ public class Main {
             }
 
             case 7 -> {
-
+                RelatoriosGerais.compararGastosCliente(listaConsultas, listaEventos);
             }
 
             case 8 -> {
-
+                RelatoriosGerais.pratosRecomendadosPorMedico(listaPedidos, sc);
             }
 
             case 9 -> {
@@ -135,15 +135,24 @@ public class Main {
             }
 
             case 11 -> {
-                relatorios.mediaPedidosEvento(listaEventos, listaPedidos, sc);
+                RelatoriosGerais.mediaPedidosEvento(listaEventos, listaPedidos, sc);
             }
 
             case 12 -> {
+                //se quiser a versão “programática” (sem impressão), use -->
+                //Map<String, RelatoriosGerais.ClienteMultiServico> mapa = RelatoriosGerais.clientesEmMaisDeUmServico(listaConsultas, listaEventos);
+                // e então use o mapa como quiser.
 
+                RelatoriosGerais.listarClientesEmMaisDeUmServico(listaConsultas, listaEventos);
             }
 
             case 13 -> {
+                //se quiser os valores para usar em outro lugar (sem imprimir), você pode chamar -->
+              /*double pctClinica = RelatoriosGerais.percentualComparecimentoClinica(listaConsultas);
+                double pctEventos = RelatoriosGerais.percentualComparecimentoEventos(listaEventos);
+                double pctGeral   = RelatoriosGerais.percentualComparecimentoGeral(listaConsultas, listaEventos);*/
 
+                RelatoriosGerais.listarPercentuaisComparecimento(listaConsultas, listaEventos);
             }
         }
     }
