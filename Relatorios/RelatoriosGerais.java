@@ -1,541 +1,275 @@
 package Relatorios;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import Base.*;
 import Clinica.*;
 import Eventos.*;
 import Restaurante.*;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RelatoriosGerais {
 
     protected List<Consulta> consultas;
     private List<Evento> eventos;
-    private List<Prato> restaurante;
+
     public RelatoriosGerais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
         this.consultas = consultas;
         this.eventos = eventos;
-        this.restaurante = restaurante;
     }
 
-    // ---- PERGUNTA 1 ----
-    // Quais médicos e eventos têm maior ocupação nos mesmo dia?
+    // ===== CASE 5: Choques de dia entre médicos e eventos =====
     public void relatorioChoquesMedicoEvento() {
-
-        // Map para contar quantos choques cada médico tem
         Map<Medico, Integer> choquesPorMedico = new HashMap<>();
-
-        // Map para contar quantos choques cada evento tem
         Map<Evento, Integer> choquesPorEvento = new HashMap<>();
 
-        // Para cada consulta e cada evento, verificamos se acontecem no mesmo "bloco de dia"
-        // Regra simples: MESMO DIA (ex.: 2025-10-26 às 14h)
         for (Consulta consulta : consultas) {
-
-            LocalDateTime diaConsulta = consulta.getAgenda().getDataHora();
+            if (consulta == null || consulta.getAgenda() == null) continue;
+            LocalDate dataConsulta = consulta.getAgenda().getDataHora().toLocalDate();
             Medico medico = consulta.getMedico();
-
             for (Evento evento : eventos) {
-
-                LocalDateTime diaEvento = evento.getData();
-
-                if (diaConsulta.toLocalDate().equals(diaEvento.toLocalDate())) {
-                    // contou conflito desse médico neste dia
-                    choquesPorMedico.put(
-                        medico,
-                        choquesPorMedico.getOrDefault(medico, 0) + 1
-                    );
-
-                    // contou conflito desse evento neste dia
-                    choquesPorEvento.put(
-                        evento,
-                        choquesPorEvento.getOrDefault(evento, 0) + 1
-                    );
+                if (evento == null || evento.getData() == null) continue;
+                LocalDate dataEvento = evento.getData().toLocalDate();
+                if (dataConsulta.equals(dataEvento)) {
+                    choquesPorMedico.put(medico, choquesPorMedico.getOrDefault(medico, 0) + 1);
+                    choquesPorEvento.put(evento, choquesPorEvento.getOrDefault(evento, 0) + 1);
                 }
             }
         }
 
-        // Agora vamos imprimir um ranking
-        System.out.println("==== RELATÓRIO: Choques de dia entre clínica e eventos ====");
-
-        // Top médicos que mais "trabalham" em horários que também têm evento
-        System.out.println("\n>> Médicos com mais consultas em dias que também têm evento:");
+        System.out.println("\n==== RELATORIO: Choques de dia entre clínica e eventos ====");
+        System.out.println("\nMédico                         | Conflitos");
+        System.out.println("-------------------------------------------");
         choquesPorMedico.entrySet().stream()
-            .sorted(Map.Entry.<Medico,Integer>comparingByValue().reversed())
-            .limit(5)
-            .forEach(entry -> {
-                Medico m = entry.getKey();
-                Integer qtd = entry.getValue();
-                System.out.println("- " + m.getNome() + " | " + qtd + " conflitos de dia com eventos");
-            });
+                .sorted(Map.Entry.<Medico,Integer>comparingByValue().reversed())
+                .limit(10)
+                .forEach(e -> System.out.printf("%-30s | %d%n", e.getKey().getNome(), e.getValue()));
 
-        // Top eventos que mais batem com consultas
-        System.out.println("\n>> Eventos que mais coincidem com consultas médicas:");
+        System.out.println("\nEvento                         | Conflitos");
+        System.out.println("-------------------------------------------");
         choquesPorEvento.entrySet().stream()
-            .sorted(Map.Entry.<Evento,Integer>comparingByValue().reversed())
-            .limit(5)
-            .forEach(entry -> {
-                Evento e = entry.getKey();
-                Integer qtd = entry.getValue();
-
-                // participantes pode ser útil pra contextualizar "ocupação"
-                int inscritos = e.getTotalInscritos();
-
-                System.out.println("- " + e.getNome()
-                    + " | " + qtd + " conflitos de dia com consultas"
-                    + " | " + inscritos + " inscritos");
-            });
+                .sorted(Map.Entry.<Evento,Integer>comparingByValue().reversed())
+                .limit(10)
+                .forEach(e -> System.out.printf("%-30s | %d%n", e.getKey().getNome(), e.getValue()));
 
         System.out.println("\n===============================================================\n");
     }
 
-// ---- PERGUNTA 2 ----
-public void relatorioPacientesFaltaramCompareceramEvento(
-        List<Consulta> listaConsultas,
-        List<Evento> listaEventos) {
-    System.out.println("\n=== PACIENTES QUE FALTARAM E COMPARECERAM A EVENTOS ===\n");
+    // ===== CASE 6 =====
+    public void relatorioPacientesFaltaramCompareceramEvento(List<Consulta> listaConsultas, List<Evento> listaEventos) {
+        System.out.println("\n=== PACIENTES QUE FALTARAM CONSULTAS E COMPARECERAM A EVENTOS ===\n");
+        boolean encontrou = false;
 
-    boolean encontrou = false;
-    for (Consulta consulta : listaConsultas) {
-        if (!consulta.getComparecimento_Consulta()) { // ou consulta.getCompareceu() == false
-            String nomePaciente = consulta.getPaciente().getNome();
-
-            for (Evento evento : listaEventos) {
-                for (Participante participante : evento.getParticipantes()) {
-                    if (participante.getNome().equalsIgnoreCase(nomePaciente)) {
-                        System.out.println("- " + nomePaciente +
-                            " → " + evento.getNome());
-                        encontrou = true;
+        for (Consulta consulta : listaConsultas) {
+            if (consulta == null) continue;
+            if (!consulta.getComparecimento_Consulta()) {
+                String nomePaciente = consulta.getPaciente().getNome();
+                for (Evento evento : listaEventos) {
+                    if (evento == null || evento.getParticipantes() == null) continue;
+                    for (Participante participante : evento.getParticipantes()) {
+                        if (participante != null && participante.getNome().equalsIgnoreCase(nomePaciente)) {
+                            System.out.printf("%-30s -> %s%n", nomePaciente, evento.getNome());
+                            encontrou = true;
+                        }
                     }
                 }
             }
         }
+
+        if (!encontrou)
+            System.out.println("Nenhum paciente que faltou à consulta compareceu a eventos.");
+        System.out.println("\n=========================================================\n");
     }
 
-    if (!encontrou) {
-        System.out.println("Nenhum paciente que faltou à consulta compareceu a eventos.");
-    }
-
-    System.out.println("\n=========================================================\n");
-}
-// ---- PERGUNTA 3 ----
- public static void compararGastosCliente(List<Consulta> consultas, List<Evento> eventos) {
-        if (consultas.isEmpty() || eventos.isEmpty()) {
-            System.out.println("É necessário ter consultas e eventos cadastrados para realizar a comparação.");
-            return;
-        }
-
+    // ===== CASE 7 =====
+    public static void compararGastosCliente(List<Consulta> consultas, List<Evento> eventos) {
         Map<String, Double> gastoClinica = new HashMap<>();
         Map<String, Double> gastoEventos = new HashMap<>();
 
-        // Gasto total na clínica por paciente
         for (Consulta c : consultas) {
             if (c == null || c.getPaciente() == null) continue;
             String nome = c.getPaciente().getNome().trim().toLowerCase();
             gastoClinica.put(nome, gastoClinica.getOrDefault(nome, 0.0) + c.getValor());
         }
 
-        // Gasto total em eventos por participante
         for (Evento e : eventos) {
+            if (e == null || e.getParticipantes() == null) continue;
+            double valorEvento = e.getValorEvento();
             for (Participante p : e.getParticipantes()) {
                 if (p == null) continue;
                 String nome = p.getNome().trim().toLowerCase();
-                gastoEventos.put(nome, gastoEventos.getOrDefault(nome, 0.0) + e.getValorEvento());
+                gastoEventos.put(nome, gastoEventos.getOrDefault(nome, 0.0) + valorEvento);
             }
         }
 
-        System.out.println("\n=== RELATÓRIO: Comparação de Gastos Clínica x Evento ===");
-        boolean encontrou = false;
-
+        class Linha {
+            String nome;
+            double clinica, eventos, total;
+            Linha(String n, double c, double e) { nome=n; clinica=c; eventos=e; total=c+e; }
+        }
+        List<Linha> linhas = new ArrayList<>();
         for (String nome : gastoClinica.keySet()) {
-            if (gastoEventos.containsKey(nome)) {
-                encontrou = true;
-                double valorClinica = gastoClinica.get(nome);
-                double valorEvento = gastoEventos.get(nome);
-
-                System.out.println("\nCliente: " + nome);
-                System.out.printf(" - Gasto na clínica: R$ %.2f\n", valorClinica);
-                System.out.printf(" - Gasto em eventos: R$ %.2f\n", valorEvento);
-
-                if (valorClinica > valorEvento)
-                    System.out.println(" → Gastou mais na CLÍNICA.");
-                else if (valorEvento > valorClinica)
-                    System.out.println(" → Gastou mais em EVENTOS.");
-                else
-                    System.out.println(" → Gastos iguais em ambos.");
-            }
+            if (gastoEventos.containsKey(nome))
+                linhas.add(new Linha(nome, gastoClinica.get(nome), gastoEventos.get(nome)));
         }
 
-        if (!encontrou) {
-            System.out.println("Nenhum cliente foi encontrado em ambos os serviços (clínica e eventos).");
+        linhas.sort((a,b) -> Double.compare(b.total, a.total));
+
+        System.out.println("\n=== RELATORIO: Comparação de Gastos (Clínica x Eventos) ===");
+        System.out.println("Cliente                        | Gasto Clínica | Gasto Eventos | Maior Gasto");
+        System.out.println("--------------------------------------------------------------------------");
+        for (Linha l : linhas) {
+            String maior = (l.clinica > l.eventos) ? "Clínica" : (l.eventos > l.clinica ? "Eventos" : "Empate");
+            System.out.printf("%-30s | R$ %11.2f | R$ %12.2f | %s%n",
+                    capitalize(l.nome), l.clinica, l.eventos, maior);
         }
+        System.out.println();
     }
-// ---- PERGUNTA 4 ----
- public static void pratosRecomendadosPorMedico(List<Pedido> pedidos, Scanner sc) {
-        if (pedidos.isEmpty()) {
+
+    // ===== CASE 8 =====
+    public static void impactoRecomendacaoMedicaAuto(List<Pedido> pedidos) {
+        if (pedidos == null || pedidos.isEmpty()) {
             System.out.println("Não há pedidos registrados para realizar o relatório.");
             return;
         }
 
-        System.out.print("Digite o nome do prato recomendado pelo médico: ");
-        String nomePrato = sc.nextLine().trim().toLowerCase();
+        List<LocalDate> datas = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            if (p.getAgendaPedido() != null)
+                datas.add(p.getAgendaPedido().getDataHora().toLocalDate());
+        }
+        datas.sort(Comparator.naturalOrder());
+        LocalDate dataRecomendacao = datas.get(datas.size()/2);
 
-        System.out.print("Digite a data da recomendação (DD/MM/AAAA): ");
-        String dataStr = sc.nextLine();
-        String[] partesData = dataStr.split("/");
-        int dia = Integer.parseInt(partesData[0]);
-        int mes = Integer.parseInt(partesData[1]);
-        int ano = Integer.parseInt(partesData[2]);
-        LocalDate dataRecomendacao = LocalDate.of(ano, mes, dia);
+        Map<String, Integer> contagem = new HashMap<>();
+        for (Pedido p : pedidos)
+            for (Prato pr : p.getPratos())
+                contagem.merge(pr.getNome().trim().toLowerCase(), 1, Integer::sum);
 
-        int contador = 0;
+        String pratoMais = contagem.entrySet().stream()
+                .max(Map.Entry.comparingByValue()).get().getKey();
 
-        for (Pedido pedido : pedidos) {
-            if (pedido.getAgendaPedido() == null) continue;
-            LocalDate dataPedido = pedido.getAgendaPedido().getDataHora().toLocalDate();
-            if (dataPedido.isAfter(dataRecomendacao)) {
-                for (Prato prato : pedido.getPratos()) {
-                    if (prato.getNome().trim().toLowerCase().equals(nomePrato)) {
-                        contador++;
-                    }
+        int pedidosApos = 0;
+        for (Pedido p : pedidos)
+            if (p.getAgendaPedido().getDataHora().toLocalDate().isAfter(dataRecomendacao))
+                for (Prato pr : p.getPratos())
+                    if (pr.getNome().trim().equalsIgnoreCase(pratoMais)) pedidosApos++;
+
+        System.out.println("\n=== RELATORIO: Impacto da Recomendaçao Médica ===");
+        System.out.printf("Prato recomendado: %s%n", capitalize(pratoMais));
+        System.out.printf("Data da recomendação: %s%n", dataRecomendacao);
+        System.out.printf("Pedidos desse prato após essa data: %d%n", pedidosApos);
+        System.out.println();
+    }
+
+    // ===== CASE 9 =====
+    public void relatorioServicoMaisLucrativo(List<Consulta> consultas, List<Pedido> pedidos, List<Evento> eventos) {
+        double totalClinica = consultas.stream().mapToDouble(Consulta::getValor).sum();
+        double totalEventos = eventos.stream().mapToDouble(Evento::getValorEvento).sum();
+        double totalRestaurante = 0;
+        for (Pedido p : pedidos)
+            for (Prato pr : p.getPratos())
+                totalRestaurante += pr.getPreco();
+
+        System.out.println("\n=== RELATORIO: Serviço mais lucrativo ===");
+        System.out.printf("Clínica     : R$ %.2f%n", totalClinica);
+        System.out.printf("Eventos     : R$ %.2f%n", totalEventos);
+        System.out.printf("Restaurante : R$ %.2f%n", totalRestaurante);
+        System.out.println("------------------------------------------");
+
+        double max = Math.max(totalClinica, Math.max(totalEventos, totalRestaurante));
+        if (max == totalClinica) System.out.println("Serviço mais lucrativo: CLÍNICA");
+        else if (max == totalEventos) System.out.println("Serviço mais lucrativo: EVENTOS");
+        else System.out.println("Serviço mais lucrativo: RESTAURANTE");
+    }
+
+    // ===== CASE 10 =====
+    public void relatorioFaixaHorarioMaisFrequente(List<Consulta> consultas, List<Pedido> pedidos, List<Evento> eventos) {
+        Map<String, Integer> contagem = new HashMap<>();
+
+        for (Consulta c : consultas)
+            contagem.merge(faixa(c.getAgenda().getDataHora().getHour()), 1, Integer::sum);
+
+        for (Pedido p : pedidos)
+            contagem.merge(faixa(p.getAgendaPedido().getDataHora().getHour()), 1, Integer::sum);
+
+        for (Evento e : eventos)
+            contagem.merge(faixa(e.getDataHoraEvento().getHour()), 1, Integer::sum);
+
+        String maisFrequente = contagem.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey).orElse("Indefinido");
+
+        System.out.println("\n=== RELATORIO: Faixa de horário mais frequente ===");
+        for (Map.Entry<String,Integer> e : contagem.entrySet())
+            System.out.printf("%-15s : %d ocorrências%n", e.getKey(), e.getValue());
+        System.out.println("--------------------------------------------");
+        System.out.println("Faixa mais frequentada: " + maisFrequente);
+    }
+
+    private String faixa(int h) {
+        if (h < 12) return "Manhã";
+        else if (h < 18) return "Tarde";
+        else return "Noite";
+    }
+
+    // ===== CASE 11 =====
+    public static void mediaPedidosEventoTodos(List<Evento> listaEventos, List<Pedido> listaPedidos) {
+        System.out.println("\n=== RELATORIO: Consumo Durante os Eventos ===");
+        System.out.println("Evento                         | Data        | Pedidos no dia | Total Pratos | Média (R$)");
+        System.out.println("--------------------------------------------------------------------------------------");
+        for (Evento evento : listaEventos) {
+            LocalDate dataEvento = evento.getDataHoraEvento().toLocalDate();
+            List<Pedido> noDia = listaPedidos.stream()
+                    .filter(p -> p.getAgendaPedido().getDataHora().toLocalDate().isEqual(dataEvento))
+                    .collect(Collectors.toList());
+            double soma = 0;
+            int total = 0;
+            for (Pedido p : noDia)
+                for (Prato pr : p.getPratos()) {
+                    soma += pr.getPreco();
+                    total++;
                 }
-            }
+            double media = total > 0 ? soma / total : 0;
+            System.out.printf("%-30s | %s | %14d | %12d | %9.2f%n",
+                    evento.getNome(), dataEvento, noDia.size(), total, media);
         }
-
-        System.out.println("\n=== RELATÓRIO: Impacto da Recomendação Médica ===");
-        System.out.println("Prato recomendado: " + nomePrato);
-        System.out.println("Data da recomendação: " + dataRecomendacao);
-        System.out.println("Pedidos do prato após essa data: " + contador);
-    }
-// ---- PERGUNTA 5 ----
-public void relatorioServicoMaisLucrativo(List<Consulta> consultas, List<Pedido> pedidos, List<Evento> eventos) {
-    System.out.println("\n========== RELATÓRIO: SERVIÇO MAIS LUCRATIVO ==========");
-
-    double totalClinica = 0;
-    for (Consulta c : consultas) {
-        totalClinica += c.getValor();
     }
 
-    double totalRestaurante = 0;
-    for (Pedido p : pedidos) {
-        totalRestaurante += p.getValorTotal();
+    // ===== CASE 12 =====
+    public static void listarClientesEmMaisDeUmServico(List<Consulta> consultas, List<Evento> eventos) {
+        Set<String> clientesClinica = consultas.stream()
+                .map(c -> c.getPaciente().getNome().toLowerCase()).collect(Collectors.toSet());
+        Set<String> clientesEventos = new HashSet<>();
+        for (Evento e : eventos)
+            for (Participante p : e.getParticipantes())
+                clientesEventos.add(p.getNome().toLowerCase());
+
+        clientesClinica.retainAll(clientesEventos);
+        System.out.println("\n=== RELATORIO: Clientes em mais de um serviço ===");
+        if (clientesClinica.isEmpty())
+            System.out.println("Nenhum cliente participa de mais de um serviço.");
+        else
+            clientesClinica.forEach(c -> System.out.println(capitalize(c)));
     }
 
-    double totalEventos = 0;
-    for (Evento e : eventos) {
-        totalEventos += e.getValorEvento();
-    }
-
-    System.out.println("Receita total da Clínica: R$ " + totalClinica);
-    System.out.println("Receita total do Restaurante: R$ " + totalRestaurante);
-    System.out.println("Receita total dos Eventos: R$ " + totalEventos);
-
-    if (totalClinica > totalRestaurante && totalClinica > totalEventos) {
-        System.out.println("➡ O setor mais lucrativo é a CLÍNICA.");
-    } else if (totalRestaurante > totalClinica && totalRestaurante > totalEventos) {
-        System.out.println("➡ O setor mais lucrativo é o RESTAURANTE.");
-    } else if (totalEventos > totalClinica && totalEventos > totalRestaurante) {
-        System.out.println("➡ O setor mais lucrativo é o de EVENTOS.");
-    } else {
-        System.out.println("➡ Há empate entre os setores.");
-    }
-
-    System.out.println("========================================================");
-}
-// ---- PERGUNTA 6 ----
-public void relatorioFaixaHorarioMaisFrequente(
-        List<Consulta> consultas,
-        List<Pedido> pedidos,
-        List<Evento> eventos) {
-
-    Map<Integer, Integer> contadorConsultas = new HashMap<>();
-    Map<Integer, Integer> contadorPedidos = new HashMap<>();
-    Map<Integer, Integer> contadorEventos = new HashMap<>();
-
-    // === CLÍNICA ===
-    for (Consulta c : consultas) {
-        try {
-            if (c.getHorario() != null && ((Agenda) c.getHorario()).getDataHora() != null) {
-                int hora = ((Agenda) c.getHorario()).getDataHora().getHour();
-                contadorConsultas.put(hora, contadorConsultas.getOrDefault(hora, 0) + 1);
-            }
-        } catch (Exception ignored) {}
-    }
-
-    // === RESTAURANTE ===
-    for (Pedido p : pedidos) {
-        try {
-            if (p.getAgendaPedido() != null && p.getAgendaPedido().getDataHora() != null) {
-                int hora = p.getAgendaPedido().getDataHora().getHour();
-                contadorPedidos.put(hora, contadorPedidos.getOrDefault(hora, 0) + 1);
-            }
-        } catch (Exception ignored) {}
-    }
-
-    // === EVENTOS ===
-    for (Evento e : eventos) {
-        try {
-            if (e.getData() != null) {
-                int hora = e.getData().getHour();
-                contadorEventos.put(hora, contadorEventos.getOrDefault(hora, 0) + 1);
-            }
-        } catch (Exception ignored) {}
-    }
-
-    // === Determina o horário mais frequente em cada setor ===
-    Integer horaMaisConsultas = contadorConsultas.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse(null);
-
-    Integer horaMaisPedidos = contadorPedidos.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse(null);
-
-    Integer horaMaisEventos = contadorEventos.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse(null);
-
-    // === Exibição ===
-    System.out.println("\n========== RELATÓRIO DE FAIXA DE HORÁRIO MAIS FREQUENTADA ==========\n");
-
-    if (horaMaisConsultas != null)
-        System.out.printf("Clínica: %02dh (%d consultas)%n",
-                horaMaisConsultas, contadorConsultas.get(horaMaisConsultas));
-    else
-        System.out.println("Clínica: sem registros de consultas.");
-
-    if (horaMaisPedidos != null)
-        System.out.printf("Restaurante: %02dh (%d pedidos)%n",
-                horaMaisPedidos, contadorPedidos.get(horaMaisPedidos));
-    else
-        System.out.println("Restaurante: sem registros de pedidos.");
-
-    if (horaMaisEventos != null)
-        System.out.printf("Eventos: %02dh (%d eventos)%n",
-                horaMaisEventos, contadorEventos.get(horaMaisEventos));
-    else
-        System.out.println("Eventos: sem registros de eventos.");
-
-    System.out.println("\n====================================================================\n");
-}
-
-// ---- PERGUNTA 7 ----
-
-// ================== RELATÓRIO: MÉDIA DE PEDIDOS NO DIA DO EVENTO ==================
-    public static void mediaPedidosEvento(List<Evento> listaEventos, List<Pedido> listaPedidos, Scanner sc) {
-        if (listaEventos.isEmpty() || listaPedidos.isEmpty()) {
-            System.out.println("É necessário ter ao menos um evento e um pedido registrados.");
-            return;
-        }
-
-        System.out.print("Digite o nome do evento gastronômico: ");
-        String nomeEvento = sc.nextLine();
-
-        // Busca o evento pelo nome informado
-        Evento evento = null;
-        for (Evento e : listaEventos) {
-            if (e.getNome().equalsIgnoreCase(nomeEvento)) {
-                evento = e;
-                break;
-            }
-        }
-
-        if (evento == null) {
-            System.out.println("Evento não encontrado.");
-            return;
-        }
-
-        // Garante que o evento possui uma data registrada
-        if (evento.getDataHoraEvento() == null) {
-            System.out.println("Evento sem data registrada.");
-            return;
-        }
-
-        LocalDate dataEvento = evento.getDataHoraEvento().toLocalDate();
-        List<Pedido> pedidosMesmoDia = new ArrayList<>();
-
-        // Filtra pedidos realizados no mesmo dia do evento
-        for (Pedido pedido : listaPedidos) {
-            if (pedido.getAgendaPedido() == null) continue; // Evita NullPointer
-            LocalDate dataPedido = pedido.getAgendaPedido().getDataHora().toLocalDate();
-            if (dataPedido.isEqual(dataEvento)) { // agora compara se é o mesmo dia
-                pedidosMesmoDia.add(pedido);
-            }
-        }
-
-        if (pedidosMesmoDia.isEmpty()) {
-            System.out.println("Nenhum pedido foi feito no dia do evento (" + dataEvento + ").");
-            return;
-        }
-
-        double soma = 0;
-        int totalPratos = 0;
-
-        // Calcula a soma e quantidade total de pratos
-        for (Pedido pedido : pedidosMesmoDia) {
-            for (Prato prato : pedido.getPratos()) {
-                soma += prato.getPreco();
-                totalPratos++;
-            }
-        }
-
-        double media = soma / totalPratos;
-
-        // Exibe o relatório final
-        System.out.println("\n=== Relatório: Consumo Durante o Evento ===");
-        System.out.println("Evento: " + evento.getNome());
-        System.out.println("Data do evento: " + dataEvento);
-        System.out.println("Pedidos feitos no mesmo dia: " + pedidosMesmoDia.size());
-        System.out.println("Total de pratos analisados: " + totalPratos);
-        System.out.printf("Preço médio dos pedidos durante o evento: R$ %.2f%n", media);
-    }
-
-// ---- PERGUNTA 8 ----
-// Retorna um mapa: Nome -> (detalhes: qtdConsultas e eventos em que participou)
-    public static Map<String, ClienteMultiServico> clientesEmMaisDeUmServico(List<Consulta> consultas, List<Evento> eventos) {
-
-        Map<String, String> nomeOriginalPaciente = new HashMap<>(); // normalizado -> original
-        Map<String, Long> consultasPorNome = new HashMap<>();       // normalizado -> qtd consultas
-
-        // 1) Índice de pacientes (pelas consultas)
-        for (Consulta c : consultas) {
-            if (c == null || c.getPaciente() == null || c.getPaciente().getNome() == null) continue;
-            String nome = c.getPaciente().getNome().trim();
-            String key = nome.toLowerCase();
-            nomeOriginalPaciente.putIfAbsent(key, nome);
-            consultasPorNome.put(key, consultasPorNome.getOrDefault(key, 0L) + 1L);
-        }
-
-        // 2) Cruzar com participantes de eventos
-        Map<String, ClienteMultiServico> resposta = new LinkedHashMap<>();
-        for (Evento e : eventos) {
-            if (e == null || e.getParticipantes() == null) continue;
-            for (Participante p : e.getParticipantes()) {
-                if (p == null || p.getNome() == null) continue;
-                String nomePart = p.getNome().trim();
-                String keyPart = nomePart.toLowerCase();
-
-                if (consultasPorNome.containsKey(keyPart)) {
-                    String nomeBonito = nomeOriginalPaciente.getOrDefault(keyPart, nomePart);
-
-                    ClienteMultiServico info = resposta.computeIfAbsent(
-                        nomeBonito, k -> new ClienteMultiServico(nomeBonito)
-                    );
-                    info.qtdConsultas = consultasPorNome.get(keyPart).intValue();
-                    info.eventos.add(e.getNome());
-                }
-            }
-        }
-        resposta.entrySet().removeIf(en -> en.getValue().qtdConsultas <= 0);
-        return resposta;
-    }
-    public static void listarClientesEmMaisDeUmServico(
-            List<Consulta> consultas, List<Evento> eventos) {
-
-        Map<String, ClienteMultiServico> mapa = clientesEmMaisDeUmServico(consultas, eventos);
-
-        if (mapa.isEmpty()) {
-            System.out.println("Nenhum cliente foi encontrado em mais de um serviço (clínica e eventos).");
-            return;
-        }
-
-        System.out.println("\n=== Clientes presentes em mais de um serviço (Clínica e Eventos) ===");
-        mapa.values().forEach(c -> {
-            System.out.println("- " + c.nome +
-                " | Consultas: " + c.qtdConsultas +
-                " | Eventos: " + String.join(", ", c.eventos));
-        });
-        System.out.println("Total: " + mapa.size() + " cliente(s)");
-    }
-    public static class ClienteMultiServico {
-        public String nome;
-        public int qtdConsultas = 0;
-        public List<String> eventos = new ArrayList<>();
-        public ClienteMultiServico(String nome) { this.nome = nome; }
-    }
-// ---- PERGUNTA 9 ----
-
-
-// === Percentual de comparecimento ===
-// Observação IMPORTANTE sobre a semântica do boolean:
-// • Se NO SEU CÓDIGO "true" significa QUE COMPARECEU, use "!c.getComparecimento_Consulta()" para contar faltas.
-// • Se NO SEU CÓDIGO "true" significa QUE FALTOU, troque a condição conforme indicado nos comentários abaixo.
-
-    public static double percentualComparecimentoClinica(List<Consulta> consultas) {
-        if (consultas == null || consultas.isEmpty()) return 0.0;
-        int total = consultas.size();
-
-        // Supondo: true = compareceu. Então falta = !true
-        // Se no seu projeto "true" for FALTOU, use esta linha em vez da acima:
-        long faltas = consultas.stream().filter(c -> c != null && c.getComparecimento_Consulta()).count();
-
-        double comparecimentos = total - faltas;
-        return (comparecimentos / total) * 100.0;
-    }
-
-    public static double percentualComparecimentoEventos(List<Evento> eventos) {
-        if (eventos == null || eventos.isEmpty()) return 0.0;
-
-        int total = eventos.size();
-
-        // Supondo: getComparecimentoEvento() == true significa que o evento "compareceu/confirmou".
-        long faltas = eventos.stream()
-                .filter(e -> e == null ? false : !e.getComparecimentoEvento())
-                .count();
-
-        // Se "true" no seu projeto significar FALTOU, troque pela linha abaixo:
-        // long faltas = eventos.stream().filter(e -> e != null && e.getComparecimentoEvento()).count();
-
-        double comparecimentos = total - faltas;
-        return (comparecimentos / total) * 100.0;
-    }
-
-    public static double percentualComparecimentoGeral(List<Consulta> consultas, List<Evento> eventos) {
-        int totalConsultas = (consultas == null ? 0 : consultas.size());
-        int totalEventos   = (eventos   == null ? 0 : eventos.size());
-        int totalAgendas   = totalConsultas + totalEventos;
-
-        if (totalAgendas == 0) return 0.0;
-
-        // --- faltas na clínica ---
-        long faltasClinica = 0L;
-        if (consultas != null) {
-            // Se "true" = FALTOU, use:
-            faltasClinica = consultas.stream().filter(c -> c != null && c.getComparecimento_Consulta()).count();
-        }
-
-        // --- faltas em eventos ---
-        long faltasEventos = 0L;
-        if (eventos != null) {
-            faltasEventos = eventos.stream()
-                    .filter(e -> e != null && !e.getComparecimentoEvento())
-                    .count();
-            // Se "true" = FALTOU, use:
-            faltasEventos = eventos.stream().filter(e -> e != null && e.getComparecimentoEvento()).count();
-        }
-
-        long faltasTotais = faltasClinica + faltasEventos;
-        double comparecimentos = totalAgendas - faltasTotais;
-
-        return (comparecimentos / totalAgendas) * 100.0;
-    }
+    // ===== CASE 13 =====
     public static void listarPercentuaisComparecimento(List<Consulta> consultas, List<Evento> eventos) {
-        int totalConsultas = (consultas == null ? 0 : consultas.size());
-        int totalEventos   = (eventos   == null ? 0 : eventos.size());
+        long totalConsultas = consultas.size();
+        long compareceramConsultas = consultas.stream().filter(Consulta::getComparecimento_Consulta).count();
+        double pctConsultas = totalConsultas > 0 ? (compareceramConsultas * 100.0 / totalConsultas) : 0;
 
-        double pctClinica = percentualComparecimentoClinica(consultas);
-        double pctEventos = percentualComparecimentoEventos(eventos);
-        double pctGeral   = percentualComparecimentoGeral(consultas, eventos);
+        long totalEventos = eventos.size();
+        long compareceramEventos = eventos.stream().filter(Evento::getComparecimentoEvento).count();
+        double pctEventos = totalEventos > 0 ? (compareceramEventos * 100.0 / totalEventos) : 0;
 
-        System.out.println("\n=== Percentual de Comparecimento ===");
-        System.out.printf("Clínica: %.2f%% (sobre %d consultas agendadas)\n", pctClinica, totalConsultas);
-        System.out.printf("Eventos: %.2f%% (sobre %d eventos confirmados)\n", pctEventos, totalEventos);
-        System.out.printf("Geral  : %.2f%% (sobre %d agendas totais)\n", pctGeral, (totalConsultas + totalEventos));
+        System.out.println("\n=== RELATORIO: Percentual de Comparecimento ===");
+        System.out.printf("Consultas realizadas: %.1f%% (%d/%d)%n", pctConsultas, compareceramConsultas, totalConsultas);
+        System.out.printf("Eventos confirmados: %.1f%% (%d/%d)%n", pctEventos, compareceramEventos, totalEventos);
+    }
+
+    // ===== Helpers =====
+    private static String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return s.substring(0,1).toUpperCase() + s.substring(1);
     }
 }
