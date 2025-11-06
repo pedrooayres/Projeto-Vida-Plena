@@ -15,7 +15,7 @@ public class RelatoriosGerais {
     protected List<Consulta> consultas;
     private List<Evento> eventos;
     private List<Prato> restaurante;
-    public RelatoriosGerais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos, List<Prato> restaurante) {
+    public RelatoriosGerais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
         this.consultas = consultas;
         this.eventos = eventos;
         this.restaurante = restaurante;
@@ -221,7 +221,7 @@ public void relatorioServicoMaisLucrativo(List<Consulta> consultas, List<Pedido>
 
     double totalRestaurante = 0;
     for (Pedido p : pedidos) {
-        totalRestaurante += p.calcularTotal();
+        totalRestaurante += p.getValorTotal();
     }
 
     double totalEventos = 0;
