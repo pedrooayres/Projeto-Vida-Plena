@@ -15,8 +15,7 @@ public class RelatoriosGerais {
     protected List<Consulta> consultas;
     private List<Evento> eventos;
     private List<Prato> restaurante;
-
-    public RelatoriosGerais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos) {
+    public RelatoriosGerais(List<Consulta> consultas, List<Evento> eventos, List<Pedido> pedidos, List<Prato> restaurante) {
         this.consultas = consultas;
         this.eventos = eventos;
         this.restaurante = restaurante;
@@ -222,7 +221,7 @@ public void relatorioServicoMaisLucrativo(List<Consulta> consultas, List<Pedido>
 
     double totalRestaurante = 0;
     for (Pedido p : pedidos) {
-        totalRestaurante += p.getValorTotal();
+        totalRestaurante += p.calcularTotal();
     }
 
     double totalEventos = 0;
@@ -247,87 +246,85 @@ public void relatorioServicoMaisLucrativo(List<Consulta> consultas, List<Pedido>
     System.out.println("========================================================");
 }
 // ---- PERGUNTA 6 ----
-public void relatorioFaixaHorarioMaisFrequente(List<Consulta> consultas,List<Pedido> pedidos,List<Evento> eventos) {
+public void relatorioFaixaHorarioMaisFrequente(
+        List<Consulta> consultas,
+        List<Pedido> pedidos,
+        List<Evento> eventos) {
 
-        Map<Integer, Integer> contadorConsultas = new HashMap<>();
-        Map<Integer, Integer> contadorPedidos = new HashMap<>();
-        Map<Integer, Integer> contadorEventos = new HashMap<>();
+    Map<Integer, Integer> contadorConsultas = new HashMap<>();
+    Map<Integer, Integer> contadorPedidos = new HashMap<>();
+    Map<Integer, Integer> contadorEventos = new HashMap<>();
 
-        // === CLÍNICA ===
-        for (Consulta c : consultas) {
-            try {
-                if (c.getHorario() != null) {
-                    int hora = ((LocalDateTime) c.getHorario()).getHour();
-                    contadorConsultas.put(hora, contadorConsultas.getOrDefault(hora, 0) + 1);
-                }
-            } catch (Exception ignored) {}
-        }
+    // === CLÍNICA ===
+    for (Consulta c : consultas) {
+        try {
+            if (c.getHorario() != null && ((Agenda) c.getHorario()).getDataHora() != null) {
+                int hora = ((Agenda) c.getHorario()).getDataHora().getHour();
+                contadorConsultas.put(hora, contadorConsultas.getOrDefault(hora, 0) + 1);
+            }
+        } catch (Exception ignored) {}
+    }
 
-        // === RESTAURANTE ===
-        for (Pedido p : pedidos) {
-            try {
-                if (p.getDataHora() != null) {
-                    int hora = p.getDataHora().getHour();
-                    contadorPedidos.put(hora, contadorPedidos.getOrDefault(hora, 0) + 1);
-                }
-            } catch (Exception ignored) {}
-        }
+    // === RESTAURANTE ===
+    for (Pedido p : pedidos) {
+        try {
+            if (p.getAgendaPedido() != null && p.getAgendaPedido().getDataHora() != null) {
+                int hora = p.getAgendaPedido().getDataHora().getHour();
+                contadorPedidos.put(hora, contadorPedidos.getOrDefault(hora, 0) + 1);
+            }
+        } catch (Exception ignored) {}
+    }
 
-        // === EVENTOS ===
-        /* for (Evento e : eventos) {
-            LocalDateTime horario = null;
-            try {
-                if (e.getHorario() != null)
-                    horario = e.getHorario();
-                else if (e.getDataHora() != null)
-                    horario = e.getDataHora();
-            } catch (Exception ignored) {}
-
-            if (horario != null) {
-                int hora = horario.getHour();
+    // === EVENTOS ===
+    for (Evento e : eventos) {
+        try {
+            if (e.getData() != null) {
+                int hora = e.getData().getHour();
                 contadorEventos.put(hora, contadorEventos.getOrDefault(hora, 0) + 1);
             }
-        } */
-
-        // === Determina o horário mais frequente em cada setor ===
-        Integer horaMaisConsultas = contadorConsultas.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
-        Integer horaMaisPedidos = contadorPedidos.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
-        Integer horaMaisEventos = contadorEventos.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
-        // === Exibição ===
-        System.out.println("\n========== RELATÓRIO DE FAIXA DE HORÁRIO MAIS FREQUENTADA ==========\n");
-
-        if (horaMaisConsultas != null)
-            System.out.printf("Clínica: %02dh (%d consultas)%n",
-                    horaMaisConsultas, contadorConsultas.get(horaMaisConsultas));
-        else
-            System.out.println("Clínica: sem registros de consultas.");
-
-        if (horaMaisPedidos != null)
-            System.out.printf("Restaurante: %02dh (%d pedidos)%n",
-                    horaMaisPedidos, contadorPedidos.get(horaMaisPedidos));
-        else
-            System.out.println("Restaurante: sem registros de pedidos.");
-
-       /*/ if (horaMaisEventos != null)
-            System.out.printf("Eventos: %02dh (%d eventos)%n",
-                    horaMaisEventos, contadorEventos.get(horaMaisEventos));
-        else
-            System.out.println("Eventos: sem registros de eventos."); */
-        System.out.println("\n====================================================================\n");
+        } catch (Exception ignored) {}
     }
-        
+
+    // === Determina o horário mais frequente em cada setor ===
+    Integer horaMaisConsultas = contadorConsultas.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+
+    Integer horaMaisPedidos = contadorPedidos.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+
+    Integer horaMaisEventos = contadorEventos.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+
+    // === Exibição ===
+    System.out.println("\n========== RELATÓRIO DE FAIXA DE HORÁRIO MAIS FREQUENTADA ==========\n");
+
+    if (horaMaisConsultas != null)
+        System.out.printf("Clínica: %02dh (%d consultas)%n",
+                horaMaisConsultas, contadorConsultas.get(horaMaisConsultas));
+    else
+        System.out.println("Clínica: sem registros de consultas.");
+
+    if (horaMaisPedidos != null)
+        System.out.printf("Restaurante: %02dh (%d pedidos)%n",
+                horaMaisPedidos, contadorPedidos.get(horaMaisPedidos));
+    else
+        System.out.println("Restaurante: sem registros de pedidos.");
+
+    if (horaMaisEventos != null)
+        System.out.printf("Eventos: %02dh (%d eventos)%n",
+                horaMaisEventos, contadorEventos.get(horaMaisEventos));
+    else
+        System.out.println("Eventos: sem registros de eventos.");
+
+    System.out.println("\n====================================================================\n");
+}
+
 // ---- PERGUNTA 7 ----
 
 // ================== RELATÓRIO: MÉDIA DE PEDIDOS NO DIA DO EVENTO ==================
