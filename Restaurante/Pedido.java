@@ -1,18 +1,38 @@
 package Restaurante;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Base.Agenda;
-import java.util.*;
 
 public class Pedido {
-    private List<Prato> pratos;
-    private Agenda agendaPedido;
+    private List<Prato> itens = new ArrayList<>();
+    private Agenda agenda_pedido;
 
-    public Pedido() { this.pratos = new ArrayList<>(); this.agendaPedido=null; }
-    public void adicionarPrato(Prato p, Agenda a) { if(p!=null) pratos.add(p); if(a!=null) this.agendaPedido=a; }
-    public List<Prato> getPratos() { return pratos; }
-    public List<Prato> getItens() { return pratos; } // compatibilidade
-    public Agenda getAgendaPedido() { return agendaPedido; }
-    public java.time.LocalDateTime getDataHora() { return agendaPedido==null?null:agendaPedido.getDataHora(); }
-    public double calcularTotal() { return pratos.stream().mapToDouble(Prato::getPreco).sum(); }
-    public double getValorTotal() { return calcularTotal(); }
+    public void adicionarPrato(Prato prato, Agenda agenda_pedido) {
+        itens.add(prato);
+        this.agenda_pedido = agenda_pedido;
+    }
+
+    public List<Prato> getItens() { return itens; }
+    public Agenda getAgenda() { return agenda_pedido; }
+
+    // Alias para compatibilidade com Main.java
+    public List<Prato> getPratos() {
+        return getItens();
+    }
+
+    // Alias para compatibilidade com Main.java
+    public Agenda getAgendaPedido() {
+        return getAgenda();
+    }
+
+    // Versão corrigida com loop for
+    public double calcularTotal() {
+        double total = 0.0;
+        for (Prato p : itens) {
+            total += p.getPreco();
+        }
+        return total;
+    }
 }
