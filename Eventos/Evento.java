@@ -3,6 +3,7 @@ package Eventos;
 import Base.Local;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Evento {
@@ -13,7 +14,7 @@ public class Evento {
     private Local local;
     private LocalDateTime data;
     private LocalDateTime dataCriacao;
-    public List<Participante> participantes;
+    private List<Participante> participantes;
     private boolean comparecimento_evento;
 
     public Evento(String nome, Local local, int capacidadeMax, double valor_evento, String tipo, LocalDateTime data, boolean comparecimento_evento) {
@@ -41,9 +42,10 @@ public class Evento {
     public double getValorEvento() { return valor_evento; }
     public String getNome() { return nome; }
     public LocalDateTime getData() { return data; }
+    public List<Participante> getParticipantes() { return Collections.unmodifiableList(participantes); }
     public LocalDateTime getDataCriacao() { return dataCriacao; }
     public boolean getComparecimentoEvento() { return comparecimento_evento; }
+
+    // NOVO MÉTODO — compatível com o Main.java
     public LocalDateTime getDataHoraEvento() { return data; }
-    public LocalDateTime getHorario() {LocalDateTime horario = null;return horario; }
-    public List<Participante> getParticipantes() { return participantes;}
 }
