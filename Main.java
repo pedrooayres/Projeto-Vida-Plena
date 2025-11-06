@@ -119,12 +119,12 @@ public class Main {
 
             }
             case 7 -> {
-                relatorios.compararGastosCliente(listaConsultas, listaEventos);
+                RelatoriosGerais.compararGastosCliente(listaConsultas, listaEventos);
 
             }
 
             case 8 -> {
-                relatorios.pratosRecomendadosPorMedico(listaPedidos, sc);
+                RelatoriosGerais.pratosRecomendadosPorMedico(listaPedidos, sc);
             }
 
             case 9 -> {
@@ -136,16 +136,16 @@ public class Main {
             }
 
             case 11 -> {
-                relatorios.mediaPedidosEvento(listaEventos, listaPedidos, sc);
+                RelatoriosGerais.mediaPedidosEvento(listaEventos, listaPedidos, sc);
             }
 
             case 12 -> {
-                relatorios.clientesEmMaisDeUmServico(listaConsultas, listaEventos);
+                RelatoriosGerais.clientesEmMaisDeUmServico(listaConsultas, listaEventos);
 
             }
 
             case 13 -> {
-                relatorios.listarPercentuaisComparecimento(listaConsultas, listaEventos);
+                RelatoriosGerais.listarPercentuaisComparecimento(listaConsultas, listaEventos);
 
             }
         }
