@@ -17,7 +17,96 @@ public class RelatoriosGerais {
         this.eventos = eventos;
     }
 
-    // ===== CASE 5: Choques de dia entre médicos e eventos =====
+    // ===== CASE 2: Faltas por dia =====
+    public static void faltasPorFaixaDeHorario(List<Consulta> consultas, List<Evento> eventos) {
+        System.out.println("\n=== RELATORIO: Faltas por Dia (Clínica e Eventos) ===");
+        System.out.printf("Clínica → %s%n", faltasPorDiaConsultas(consultas));
+        System.out.printf("Eventos → %s%n", faltasPorDiaEventos(eventos));
+    }
+
+    private static String faltasPorDiaConsultas(List<Consulta> consultas) {
+        if (consultas == null || consultas.isEmpty()) return "Sem dados";
+        Map<LocalDate, Integer> faltasPorDia = new TreeMap<>();
+        Map<LocalDate, Map<String, Integer>> faltasPorFaixa = new HashMap<>();
+
+        for (Consulta c : consultas) {
+            if (c == null || c.getAgenda() == null || c.getComparecimento_Consulta()) continue;
+            LocalDate dia = c.getAgenda().getDataHora().toLocalDate();
+            String faixa = faixaHorario(c.getAgenda().getDataHora().getHour());
+            faltasPorDia.merge(dia, 1, Integer::sum);
+            faltasPorFaixa.computeIfAbsent(dia, d -> new HashMap<>()).merge(faixa, 1, Integer::sum);
+        }
+        if (faltasPorDia.isEmpty()) return "Sem faltas registradas";
+
+        LocalDate diaMaisFaltas = faltasPorDia.entrySet().stream()
+                .sorted((a, b) -> {
+                    int cmp = Integer.compare(b.getValue(), a.getValue());
+                    if (cmp == 0) return a.getKey().compareTo(b.getKey());
+                    return cmp;
+                })
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+
+        int total = faltasPorDia.get(diaMaisFaltas);
+        String faixaMais = faltasPorFaixa.get(diaMaisFaltas).entrySet().stream()
+                .sorted((a, b) -> {
+                    int cmp = Integer.compare(b.getValue(), a.getValue());
+                    if (cmp == 0) return a.getKey().compareTo(b.getKey());
+                    return cmp;
+                })
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse("Indefinido");
+
+        return String.format("Dia %s — Total: %d faltas (mais na %s)", diaMaisFaltas, total, faixaMais);
+    }
+
+    private static String faltasPorDiaEventos(List<Evento> eventos) {
+        if (eventos == null || eventos.isEmpty()) return "Sem dados";
+        Map<LocalDate, Integer> faltasPorDia = new TreeMap<>();
+        Map<LocalDate, Map<String, Integer>> faltasPorFaixa = new HashMap<>();
+
+        for (Evento e : eventos) {
+            if (e == null || e.getDataHoraEvento() == null || e.getComparecimentoEvento()) continue;
+            LocalDate dia = e.getDataHoraEvento().toLocalDate();
+            String faixa = faixaHorario(e.getDataHoraEvento().getHour());
+            faltasPorDia.merge(dia, 1, Integer::sum);
+            faltasPorFaixa.computeIfAbsent(dia, d -> new HashMap<>()).merge(faixa, 1, Integer::sum);
+        }
+        if (faltasPorDia.isEmpty()) return "Sem faltas registradas";
+
+        LocalDate diaMaisFaltas = faltasPorDia.entrySet().stream()
+                .sorted((a, b) -> {
+                    int cmp = Integer.compare(b.getValue(), a.getValue());
+                    if (cmp == 0) return a.getKey().compareTo(b.getKey());
+                    return cmp;
+                })
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+
+        int total = faltasPorDia.get(diaMaisFaltas);
+        String faixaMais = faltasPorFaixa.get(diaMaisFaltas).entrySet().stream()
+                .sorted((a, b) -> {
+                    int cmp = Integer.compare(b.getValue(), a.getValue());
+                    if (cmp == 0) return a.getKey().compareTo(b.getKey());
+                    return cmp;
+                })
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse("Indefinido");
+
+        return String.format("Dia %s — Total: %d faltas (mais na %s)", diaMaisFaltas, total, faixaMais);
+    }
+
+    private static String faixaHorario(int h) {
+        if (h < 12) return "Manhã";
+        if (h < 18) return "Tarde";
+        return "Noite";
+    }
+
+    // ===== CASE 5 =====
     public void relatorioChoquesMedicoEvento() {
         Map<Medico, Integer> choquesPorMedico = new HashMap<>();
         Map<Evento, Integer> choquesPorEvento = new HashMap<>();
@@ -40,14 +129,14 @@ public class RelatoriosGerais {
         System.out.println("\nMédico                         | Conflitos");
         System.out.println("-------------------------------------------");
         choquesPorMedico.entrySet().stream()
-                .sorted(Map.Entry.<Medico,Integer>comparingByValue().reversed())
+                .sorted(Map.Entry.<Medico, Integer>comparingByValue().reversed())
                 .limit(10)
                 .forEach(e -> System.out.printf("%-30s | %d%n", e.getKey().getNome(), e.getValue()));
 
         System.out.println("\nEvento                         | Conflitos");
         System.out.println("-------------------------------------------");
         choquesPorEvento.entrySet().stream()
-                .sorted(Map.Entry.<Evento,Integer>comparingByValue().reversed())
+                .sorted(Map.Entry.<Evento, Integer>comparingByValue().reversed())
                 .limit(10)
                 .forEach(e -> System.out.printf("%-30s | %d%n", e.getKey().getNome(), e.getValue()));
 
@@ -104,15 +193,16 @@ public class RelatoriosGerais {
         class Linha {
             String nome;
             double clinica, eventos, total;
-            Linha(String n, double c, double e) { nome=n; clinica=c; eventos=e; total=c+e; }
+            Linha(String n, double c, double e) { nome = n; clinica = c; eventos = e; total = c + e; }
         }
+
         List<Linha> linhas = new ArrayList<>();
         for (String nome : gastoClinica.keySet()) {
             if (gastoEventos.containsKey(nome))
                 linhas.add(new Linha(nome, gastoClinica.get(nome), gastoEventos.get(nome)));
         }
 
-        linhas.sort((a,b) -> Double.compare(b.total, a.total));
+        linhas.sort((a, b) -> Double.compare(b.total, a.total));
 
         System.out.println("\n=== RELATORIO: Comparação de Gastos (Clínica x Eventos) ===");
         System.out.println("Cliente                        | Gasto Clínica | Gasto Eventos | Maior Gasto");
@@ -132,13 +222,13 @@ public class RelatoriosGerais {
             return;
         }
 
-        List<LocalDate> datas = new ArrayList<>();
-        for (Pedido p : pedidos) {
-            if (p.getAgendaPedido() != null)
-                datas.add(p.getAgendaPedido().getDataHora().toLocalDate());
-        }
-        datas.sort(Comparator.naturalOrder());
-        LocalDate dataRecomendacao = datas.get(datas.size()/2);
+        List<LocalDate> datas = pedidos.stream()
+                .filter(p -> p.getAgendaPedido() != null)
+                .map(p -> p.getAgendaPedido().getDataHora().toLocalDate())
+                .sorted()
+                .toList();
+
+        LocalDate dataRecomendacao = datas.get(datas.size() / 2);
 
         Map<String, Integer> contagem = new HashMap<>();
         for (Pedido p : pedidos)
@@ -146,15 +236,18 @@ public class RelatoriosGerais {
                 contagem.merge(pr.getNome().trim().toLowerCase(), 1, Integer::sum);
 
         String pratoMais = contagem.entrySet().stream()
-                .max(Map.Entry.comparingByValue()).get().getKey();
+                .max(Map.Entry.comparingByValue())
+                .get()
+                .getKey();
 
         int pedidosApos = 0;
         for (Pedido p : pedidos)
             if (p.getAgendaPedido().getDataHora().toLocalDate().isAfter(dataRecomendacao))
                 for (Prato pr : p.getPratos())
-                    if (pr.getNome().trim().equalsIgnoreCase(pratoMais)) pedidosApos++;
+                    if (pr.getNome().equalsIgnoreCase(pratoMais))
+                        pedidosApos++;
 
-        System.out.println("\n=== RELATORIO: Impacto da Recomendaçao Médica ===");
+        System.out.println("\n=== RELATORIO: Impacto da Recomendação Médica ===");
         System.out.printf("Prato recomendado: %s%n", capitalize(pratoMais));
         System.out.printf("Data da recomendação: %s%n", dataRecomendacao);
         System.out.printf("Pedidos desse prato após essa data: %d%n", pedidosApos);
@@ -187,29 +280,24 @@ public class RelatoriosGerais {
         Map<String, Integer> contagem = new HashMap<>();
 
         for (Consulta c : consultas)
-            contagem.merge(faixa(c.getAgenda().getDataHora().getHour()), 1, Integer::sum);
+            contagem.merge(faixaHorario(c.getAgenda().getDataHora().getHour()), 1, Integer::sum);
 
         for (Pedido p : pedidos)
-            contagem.merge(faixa(p.getAgendaPedido().getDataHora().getHour()), 1, Integer::sum);
+            contagem.merge(faixaHorario(p.getAgendaPedido().getDataHora().getHour()), 1, Integer::sum);
 
         for (Evento e : eventos)
-            contagem.merge(faixa(e.getDataHoraEvento().getHour()), 1, Integer::sum);
+            contagem.merge(faixaHorario(e.getDataHoraEvento().getHour()), 1, Integer::sum);
 
         String maisFrequente = contagem.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).orElse("Indefinido");
+                .map(Map.Entry::getKey)
+                .orElse("Indefinido");
 
         System.out.println("\n=== RELATORIO: Faixa de horário mais frequente ===");
-        for (Map.Entry<String,Integer> e : contagem.entrySet())
+        for (Map.Entry<String, Integer> e : contagem.entrySet())
             System.out.printf("%-15s : %d ocorrências%n", e.getKey(), e.getValue());
         System.out.println("--------------------------------------------");
         System.out.println("Faixa mais frequentada: " + maisFrequente);
-    }
-
-    private String faixa(int h) {
-        if (h < 12) return "Manhã";
-        else if (h < 18) return "Tarde";
-        else return "Noite";
     }
 
     // ===== CASE 11 =====
@@ -238,7 +326,8 @@ public class RelatoriosGerais {
     // ===== CASE 12 =====
     public static void listarClientesEmMaisDeUmServico(List<Consulta> consultas, List<Evento> eventos) {
         Set<String> clientesClinica = consultas.stream()
-                .map(c -> c.getPaciente().getNome().toLowerCase()).collect(Collectors.toSet());
+                .map(c -> c.getPaciente().getNome().toLowerCase())
+                .collect(Collectors.toSet());
         Set<String> clientesEventos = new HashSet<>();
         for (Evento e : eventos)
             for (Participante p : e.getParticipantes())
@@ -267,9 +356,8 @@ public class RelatoriosGerais {
         System.out.printf("Eventos confirmados: %.1f%% (%d/%d)%n", pctEventos, compareceramEventos, totalEventos);
     }
 
-    // ===== Helpers =====
     private static String capitalize(String s) {
         if (s == null || s.isEmpty()) return s;
-        return s.substring(0,1).toUpperCase() + s.substring(1);
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }
