@@ -1,16 +1,13 @@
 CONSULTA;Ana Souza;Dr. Carlos;15/09/2025;09:00;250.0;true
-CONSULTA;Ana Souza;Dr. Carlos;30/10/2025;09:00;250.0;true
 CONSULTA;Bruno Lima;Dr. Pedro;16/09/2025;10:00;300.0;false
-CONSULTA;Bruno Lima;Dr. Pedro;10/10/2025;10:00;300.0;true
 CONSULTA;Carla Mendes;Dra. Júlia;17/09/2025;11:30;280.0;true
-CONSULTA;Carla Mendes;Dra. Júlia;20/10/2025;11:30;280.0;true
 CONSULTA;Diego Rocha;Dr. Lucas;18/09/2025;15:00;320.0;true
 CONSULTA;Eduarda Alves;Dr. Ricardo;19/09/2025;08:30;270.0;false
 CONSULTA;Felipe Nunes;Dr. Marcelo;20/09/2025;14:00;250.0;true
 CONSULTA;Gabriela Pires;Dra. Marina;21/09/2025;09:30;260.0;true
-CONSULTA;Heitor Torres;Dr. João;25/09/2025;13:30;300.0;true
-CONSULTA;Isabela Lopes;Dr. Rafael;25/09/2025;16:00;310.0;true
-CONSULTA;João Pedro;Dr. Henrique;25/09/2025;17:30;280.0;false
+CONSULTA;Heitor Torres;Dr. João;22/09/2025;13:30;300.0;true
+CONSULTA;Isabela Lopes;Dr. Rafael;23/09/2025;16:00;310.0;true
+CONSULTA;João Pedro;Dr. Henrique;24/09/2025;17:30;280.0;false
 CONSULTA;Karen Silva;Dr. Carlos;01/10/2025;09:30;250.0;true
 CONSULTA;Leonardo Dias;Dr. Pedro;03/10/2025;10:00;310.0;true
 CONSULTA;Mariana Tavares;Dra. Júlia;04/10/2025;11:00;290.0;false
@@ -51,22 +48,25 @@ CONSULTA;William Paiva;Dra. Marina;24/11/2025;09:00;260.0;true
 CONSULTA;Ximena Diniz;Dr. João;25/11/2025;12:00;300.0;true
 CONSULTA;Yuri Falcão;Dr. Rafael;26/11/2025;16:30;310.0;true
 CONSULTA;Zilda Cardoso;Dr. Henrique;27/11/2025;17:00;280.0;true
-CONSULTA;Ana Souza;Dr. Carlos;20/11/2025;09:00;250.0;true
-CONSULTA;Bruno Lima;Dr. Pedro;20/11/2025;10:00;300.0;true
-CONSULTA;Diego Rocha;Dr. Lucas;20/11/2025;15:00;320.0;false
-CONSULTA;Heitor Torres;Dr. João;20/11/2025;13:30;300.0;true
+CONSULTA;Joana Prado;Dr. Carlos;05/11/2025;09:00;300.0;false
+CONSULTA;Rogério Azevedo;Dr. Pedro;05/11/2025;10:00;280.0;false
+CONSULTA;Silvana Rocha;Dr. João;05/11/2025;11:30;260.0;false
+CONSULTA;Marcos Reis;Dra. Marina;05/11/2025;14:00;320.0;false
+CONSULTA;Patrícia Gomes;Dr. Henrique;05/11/2025;16:00;290.0;false
 EVENTO;Feira de Saúde;Auditório Vida;40;60.0;Saúde;20/09/2025;18:00;true
 EVENTO;Palestra Bem-Estar;Sala Verde;50;50.0;Educação;25/09/2025;19:00;true
 EVENTO;Semana Fitness;Ginásio Central;100;70.0;Esporte;10/10/2025;09:00;true
 EVENTO;Feira Gastronômica;Praça Gourmet;80;90.0;Gastronomia;15/10/2025;18:30;true
-EVENTO;Workshop Nutrição;Auditório A;60;75.0;Saúde;25/10/2025;17:00;false
+EVENTO;Workshop Nutrição;Auditório A;60;75.0;Saúde;25/10/2025;17:00;true
 EVENTO;Congresso Médico;Centro de Convenções;200;150.0;Saúde;30/10/2025;08:00;true
 EVENTO;Maratona Solidária;Parque da Cidade;300;120.0;Esporte;05/11/2025;07:00;true
-EVENTO;Feira de Inovação;Pavilhão Tech;120;80.0;Tecnologia;10/11/2025;10:00;false
+EVENTO;Feira de Inovação;Pavilhão Tech;120;80.0;Tecnologia;10/11/2025;10:00;true
 EVENTO;Simpósio Vida Plena;Centro Cultural;90;100.0;Saúde;15/11/2025;14:00;true
 EVENTO;Workshop Motivacional;Espaço Luz;60;70.0;Motivação;20/11/2025;16:00;true
-EVENTO;Encontro Comunidade;Praça Central;120;20.0;Social;20/11/2025;09:00;true
-EVENTO;Feira de Tecnologia;Pavilhão Tech;200;120.0;Tecnologia;25/11/2025;10:00;true
+EVENTO;Palestra Nutrição;Auditório B;80;60.0;Saúde;25/09/2025;09:00;false
+EVENTO;Encontro Fitness;Ginásio Norte;150;90.0;Esporte;25/09/2025;11:00;false
+EVENTO;Feira de Bem-Estar;Parque Verde;200;120.0;Saúde;25/09/2025;15:00;false
+EVENTO;Congresso de Saúde;Centro Sul;300;150.0;Saúde;25/09/2025;19:00;false
 PARTICIPANTE;Feira de Saúde;Ana Souza;11111111111;ana@email.com
 PARTICIPANTE;Feira de Saúde;Bruno Lima;22222222222;bruno@email.com
 PARTICIPANTE;Feira de Saúde;Carla Mendes;33333333333;carla@email.com
@@ -87,12 +87,6 @@ PARTICIPANTE;Feira Gastronômica;Vinicius Barros;18181818181;vinicius@email.com
 PARTICIPANTE;Feira Gastronômica;Julia Castro;19191919191;julia@email.com
 PARTICIPANTE;Workshop Motivacional;Yasmin Ferreira;20202020202;yasmin@email.com
 PARTICIPANTE;Maratona Solidária;Zeca Borges;21212121212;zeca@email.com
-PARTICIPANTE;Workshop Motivacional;Ana Souza;11111111111;ana@email.com
-PARTICIPANTE;Simpósio Vida Plena;Bruno Lima;22222222222;bruno@email.com
-PARTICIPANTE;Feira de Inovação;Rafael Costa;15151515151;rafael@email.com
-PARTICIPANTE;Encontro Comunidade;Ana Souza;11111111111;ana@email.com
-PARTICIPANTE;Encontro Comunidade;Heitor Torres;88888888888;heitor@email.com
-PARTICIPANTE;Feira de Tecnologia;Julia Castro;19191919191;julia@email.com
 PEDIDO;Salada Caesar;25.0;Saudável;320;20/09/2025;13:00
 PEDIDO;Frango Grelhado;35.0;Proteína;400;20/09/2025;13:15
 PEDIDO;Suco Verde;15.0;Bebida;120;20/09/2025;13:20
@@ -108,21 +102,8 @@ PEDIDO;Água de Coco;8.0;Bebida;60;15/10/2025;12:45
 PEDIDO;Pizza Integral;45.0;Jantar;520;25/10/2025;19:00
 PEDIDO;Lasanha de Berinjela;42.0;Jantar;480;25/10/2025;19:30
 PEDIDO;Suco de Laranja;12.0;Bebida;130;25/10/2025;19:45
-PEDIDO;Smoothie de Morango;18.0;Bebida;200;30/10/2025;10:00
-PEDIDO;Torta de Frango;30.0;Almoço;460;30/10/2025;12:00
-PEDIDO;Sanduíche Natural;26.0;Lanche;340;30/10/2025;12:30
-PEDIDO;Café com Leite;9.0;Bebida;100;05/11/2025;08:00
-PEDIDO;Brownie Fit;14.0;Sobremesa;220;05/11/2025;08:15
-PEDIDO;Suco Verde;15.0;Bebida;120;05/11/2025;10:10
-PEDIDO;Filé de Frango;38.0;Almoço;450;10/11/2025;12:00
-PEDIDO;Wrap Integral;28.0;Saudável;290;10/11/2025;12:20
-PEDIDO;Café Expresso;10.0;Bebida;80;10/11/2025;12:45
-PEDIDO;Salada Caesar;25.0;Saudável;320;15/11/2025;13:00
-PEDIDO;Salada Caesar;25.0;Saudável;320;15/11/2025;13:10
-PEDIDO;Água de Coco;8.0;Bebida;60;15/11/2025;13:15
-PEDIDO;Frango Grelhado;35.0;Proteína;400;20/11/2025;11:30
-PEDIDO;Frango Grelhado;35.0;Proteína;400;20/11/2025;11:45
-PEDIDO;Suco de Laranja;12.0;Bebida;130;20/11/2025;12:10
-PEDIDO;Pizza Integral;45.0;Jantar;520;25/11/2025;19:00
-PEDIDO;Torta de Frango;30.0;Almoço;460;25/11/2025;12:10
-PEDIDO;Iogurte Natural;12.0;Lanche;150;25/11/2025;10:30
+PEDIDO;Smoothie de Morango;18.0;Bebida;200;05/11/2025;10:00
+PEDIDO;Torta de Frango;30.0;Almoço;460;10/11/2025;12:00
+PEDIDO;Sanduíche Natural;26.0;Lanche;340;15/11/2025;14:00
+PEDIDO;Café com Leite;9.0;Bebida;100;20/11/2025;08:00
+PEDIDO;Brownie Fit;14.0;Sobremesa;220;20/11/2025;08:15
