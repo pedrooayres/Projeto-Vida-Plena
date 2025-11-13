@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo_projeto.png" alt="Logo Projeto Vida Plena" width="1000"/>
+  <img src="logo_projeto.png" alt="Logo Projeto Vida Plena" width="800"/>
 </p>
 
 # 🎃 Projeto Vida Plena — Edição Especial de Halloween 👻
@@ -83,14 +83,18 @@ Durante o desenvolvimento, o grupo criou **9 perguntas estratégicas** que cruza
 cd Projeto-Vida-Plena/src
 javac main/Main.java
 java main.Main
-🧩 Diagrama UML — Estrutura Geral do Projeto
-<p align="center"> <img src="diagrama_UML_PVPR.png" alt="Diagrama UML do Projeto Vida Plena" width="850"/> </p>
-🖼️ Capturas de Tela da Execução
-<p align="center"> <img src="imagem_menu_1.png" alt="Execução do Projeto Vida Plena" width="800"/> </p>
-<p align="center"> <img src="imagem_menu_2.png" alt="Execução do Projeto Vida Plena" width="800"/> </p>
-<p align="center"> <img src="imagem_menu_3.png" alt="Execução do Projeto Vida Plena" width="800"/> </p>
-<p align="center"> <img src="imagem_menu_4.png" alt="Execução do Projeto Vida Plena" width="800"/> </p>
-<p align="center"> <img src="imagem_menu_5.png" alt="Execução do Projeto Vida Plena" width="800"/> </p>
+
+## 🧩 Diagrama UML — Estrutura Geral do Projeto
+<p align="center">
+  <img src="diagrama_UML_PVPR.png" alt="Diagrama UML do Projeto Vida Plena" width="850"/>
+</p>
+## 🖼️ Capturas de Tela da Execução
+<p align="center"><img src="imagem_menu_1.png" alt="Execução do Projeto Vida Plena" width="800"/></p>
+<p align="center"><img src="imagem_menu_2.png" alt="Execução do Projeto Vida Plena" width="800"/></p>
+<p align="center"><img src="imagem_menu_3.png" alt="Execução do Projeto Vida Plena" width="800"/></p>
+<p align="center"><img src="imagem_menu_4.png" alt="Execução do Projeto Vida Plena" width="800"/></p>
+<p align="center"><img src="imagem_menu_5.png" alt="Execução do Projeto Vida Plena" width="800"/></p>
+
 🎭 Equipe Vida Plena — Halloween Edition
 Integrante	Módulo	Função
 🧠 Pedro Henrique Mendonça Ayres	Eventos	Relatórios e integração com clínica/restaurante
