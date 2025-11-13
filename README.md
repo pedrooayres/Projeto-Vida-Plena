@@ -49,10 +49,12 @@ Copiar código
 ## 📊 Diagrama UML
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/16a02f77-0d3a-4cf4-97e8-840925d4f680" 
-       alt="Diagrama UML do Projeto Vida Plena" 
+  <img 
+       src="https://github.com/user-attachments/assets/7c6474b1-c59c-494a-8844-d0f63f53e8a3"
+       alt="Diagrama UML do Projeto Vida Plena"
        width="800">
 </p>
+
 
 ---
 
