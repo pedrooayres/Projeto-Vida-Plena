@@ -1,5 +1,6 @@
 <p align="center">
   <img src="logo_projeto.png" alt="Logo do Projeto Vida Plena" width="300">
+  <img src="https://github.com/user-attachments/assets/c6981589-9bbf-4628-94f1-3b8e8e8cd3ab" width="300">
 </p>
 
 # 🧩 Projeto Vida Plena
