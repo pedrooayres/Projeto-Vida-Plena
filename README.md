@@ -1,8 +1,5 @@
 <p align="center">
-  <p align="center">
-  <img src="https://github.com/user<img width="1024" height="1024" alt="logo_projeto" src="https://github.com/user-attachments/assets/a8d8b7f0-efed-4227-9302-17a234f065c2" />
--attachments/assets/xxxxxxxxxx" width="300">
-</p>
+  <img src="https://github.com/user-attachments/assets/a8d8b7f0-efed-4227-9302-17a234f065c2" alt="Logo Projeto Vida Plena" width="300">
 </p>
 
 # 🧩 Projeto Vida Plena
@@ -12,6 +9,7 @@ O **Projeto Vida Plena** é um sistema modular desenvolvido em **Java**, voltado
 - Eventos 💬  
 - Restaurante 🍽️  
 - Relatórios 📊  
+
 
 ---
 
