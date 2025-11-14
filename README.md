@@ -50,7 +50,7 @@ Copiar código
 
 <p align="center">
   <img 
-       src="https://github.com/user-attachments/assets/7c6474b1-c59c-494a-8844-d0f63f53e8a3"
+       src="https://github.com/user-attachments/assets/f7e11d66-5cfe-4d27-821f-3c16b0121af0"
        alt="Diagrama UML do Projeto Vida Plena"
        width="800">
 </p>
